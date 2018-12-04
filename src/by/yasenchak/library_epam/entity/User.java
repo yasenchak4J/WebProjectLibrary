@@ -1,12 +1,10 @@
 package by.yasenchak.library_epam.entity;
 
-import jdk.internal.org.objectweb.asm.commons.SerialVersionUIDAdder;
-
 import java.io.Serializable;
-import java.util.Objects;
 
 public class User implements Serializable {
 
+    private static final long serialVersionUID = -8228737910229286905L;
     private String name;
     private String password;
 
@@ -32,14 +30,19 @@ public class User implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(getName(), user.getName()) &&
-                Objects.equals(getPassword(), user.getPassword());
+        return user.getName().equals(getName()) &&
+                user.getPassword().equals(getPassword());
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getPassword());
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + getName().hashCode();
+        result = prime * result + getPassword().hashCode();
+        return result;
     }
 }
