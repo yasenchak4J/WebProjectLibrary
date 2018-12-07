@@ -20,9 +20,9 @@ public class RegistrationCommand implements Command {
         ClientService clientService = serviceFactory.getClientService();
         try {
             clientService.registration(user);
-            response = "Welcome";
+            response = EnumPages.LIBRARY.getCode();
         } catch (ServiceException e) {
-            response = "Error during registration procedure";
+            response = EnumPages.AUTH_FAILS.getCode();
         }
         return response;
     }

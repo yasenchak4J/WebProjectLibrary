@@ -1,8 +1,8 @@
 package by.yasenchak.library_epam.dao;
 
 import by.yasenchak.library_epam.entity.User;
-import by.yasenchak.library_epam.exception.RegistrationException;
-import by.yasenchak.library_epam.exception.SignInException;
+import by.yasenchak.library_epam.exception.dao_exception.RegistrationException;
+import by.yasenchak.library_epam.exception.dao_exception.SignInException;
 
 public interface UserDAO {
     boolean signIn(String login, String password) throws SignInException;

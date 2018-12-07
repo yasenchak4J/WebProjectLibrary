@@ -23,7 +23,7 @@ public class controller extends HttpServlet
         String commandName = req.getParameter("action");
         Command command = CommandHelper.getInstance().getCommand(commandName);
         String response = command.execute(req);
-        resp.setContentType("text/html");
-        resp.getWriter().println(response);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher(response);
+        requestDispatcher.forward(req, resp);
     }
 }

@@ -1,9 +1,10 @@
-package by.yasenchak.library_epam.dao;
+package by.yasenchak.library_epam.dao.impl;
 
+import by.yasenchak.library_epam.dao.UserDAO;
 import by.yasenchak.library_epam.database.ConnectionPoolImpl;
 import by.yasenchak.library_epam.entity.User;
-import by.yasenchak.library_epam.exception.RegistrationException;
-import by.yasenchak.library_epam.exception.SignInException;
+import by.yasenchak.library_epam.exception.dao_exception.RegistrationException;
+import by.yasenchak.library_epam.exception.dao_exception.SignInException;
 
 import java.sql.*;
 

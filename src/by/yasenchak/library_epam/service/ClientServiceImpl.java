@@ -3,9 +3,9 @@ package by.yasenchak.library_epam.service;
 import by.yasenchak.library_epam.dao.DAOFactory;
 import by.yasenchak.library_epam.dao.UserDAO;
 import by.yasenchak.library_epam.entity.User;
-import by.yasenchak.library_epam.exception.RegistrationException;
+import by.yasenchak.library_epam.exception.dao_exception.RegistrationException;
 import by.yasenchak.library_epam.exception.ServiceException;
-import by.yasenchak.library_epam.exception.SignInException;
+import by.yasenchak.library_epam.exception.dao_exception.SignInException;
 
 public class ClientServiceImpl implements ClientService {
     @Override

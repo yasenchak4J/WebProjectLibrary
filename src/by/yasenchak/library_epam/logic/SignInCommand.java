@@ -16,9 +16,9 @@ public class SignInCommand implements Command {
         ClientService clientService = serviceFactory.getClientService();
         try {
             clientService.signIn(login, password);
-            response = "Welcome";
+            response = EnumPages.LIBRARY.getCode();
         } catch (ServiceException e) {
-            response = "Error during login procedure";
+            response = EnumPages.AUTH_FAILS.getCode();
         }
         return response;
     }
