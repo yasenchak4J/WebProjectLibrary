@@ -8,6 +8,6 @@
     password="postgres"
     driverClassName="org.postgresql.Driver"
     url="jdbc:postgresql://localhost:5432/epamlibrary"
-    maxActive="10"
+    maxTotal="10"
     maxIdle="4"/>
 </Context>
