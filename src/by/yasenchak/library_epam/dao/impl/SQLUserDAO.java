@@ -17,25 +17,30 @@ public class SQLUserDAO implements UserDAO {
 
 
     @Override
-    public boolean signIn(String login, String password) throws SignInException{
-        boolean auth = false;
-        String SQLquery = "SELECT \"userName\", \"password\" FROM users WHERE \"userName\" ='" + login + "';" ;
+    public User signIn(String login, String password) throws SignInException{
+        String passwordUser = "", userName = "";
+        User user = null;
+        int role = 0;
+        String SQLquery = "SELECT \"userName\", \"password\", \"role\" FROM users WHERE \"userName\" ='" + login + "';" ;
         try(Connection conn = ConnectionPoolImpl.getInstance().getConnection(); Statement statement = conn.createStatement(); ResultSet result = statement.executeQuery(SQLquery)) {
             if(result.next()) {
-                String userName = result.getString("userName");
-                String passwordUser = result.getString("password");
-                auth = password.equals(passwordUser);
+                userName = result.getString("userName");
+                passwordUser = result.getString("password");
+                role = result.getInt("role");
+            }
+            if(password.equals(passwordUser)){
+                user = new User(userName, passwordUser, role);
             }
         } catch (SQLException e) {
             throw new SignInException("Problem with authorization", e);
         }
-        return auth;
+        return user;
     }
 
     @Override
     public void registration(User user) throws RegistrationException
     {
-        String SQLquery = "INSERT INTO users(\"userName\", \"password\") VALUES('" + user.getName() + "', '" + user.getPassword() + "');";
+        String SQLquery = "INSERT INTO users(\"userName\", \"password\", \"role\") VALUES('" + user.getName() + "', '" + user.getPassword() + "','" + user.getRole() + "');";
         try(Connection conn = ConnectionPoolImpl.getInstance().getConnection(); Statement statement = conn.createStatement()) {
             statement.executeUpdate(SQLquery);
         } catch (SQLException e) {

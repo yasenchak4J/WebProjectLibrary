@@ -5,6 +5,6 @@ import by.yasenchak.library_epam.exception.dao_exception.RegistrationException;
 import by.yasenchak.library_epam.exception.dao_exception.SignInException;
 
 public interface UserDAO {
-    boolean signIn(String login, String password) throws SignInException;
+    User signIn(String login, String password) throws SignInException;
     void registration(User user) throws RegistrationException;
 }

@@ -7,8 +7,23 @@ public class User implements Serializable {
     private static final long serialVersionUID = -8228737910229286905L;
     private String name;
     private String password;
+    private int role;
 
     public User() {
+    }
+
+    public User(String name, String password, int role) {
+        this.name = name;
+        this.password = password;
+        this.role = role;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 
     public String getPassword() {

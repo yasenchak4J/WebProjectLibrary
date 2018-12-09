@@ -12,14 +12,14 @@
 
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
-        <url-pattern>/controller</url-pattern>
+        <url-pattern>/index</url-pattern>
     </servlet-mapping>
-
+    
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
-        <url-pattern>/library.jsp</url-pattern>
+        <url-pattern>/pages/index</url-pattern>
     </servlet-mapping>
-
+    
     <resource-ref>
         DB Connection
         <res-ref-name>jdbc/library</res-ref-name>

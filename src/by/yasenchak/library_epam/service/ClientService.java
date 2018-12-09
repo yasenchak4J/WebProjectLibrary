@@ -4,6 +4,6 @@ import by.yasenchak.library_epam.entity.User;
 import by.yasenchak.library_epam.exception.ServiceException;
 
 public interface ClientService {
-    void signIn(String login, String password) throws ServiceException;
+    User signIn(String login, String password) throws ServiceException;
     void registration(User user) throws ServiceException;
 }

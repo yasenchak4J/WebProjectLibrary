@@ -19,7 +19,7 @@ public class GetAllBookCommand implements Command {
         try {
             List<Book> books = bookService.getAllBooks();
             request.setAttribute("books", books);
-            response = EnumPages.LIBRARY.getCode();
+            response = EnumPages.MAIN_PAGE.getCode();
         } catch (ServiceException e) {
             response = EnumPages.ERROR_PAGE.getCode();
         }

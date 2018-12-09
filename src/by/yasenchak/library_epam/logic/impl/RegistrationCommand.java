@@ -12,20 +12,21 @@ import javax.servlet.http.HttpServletRequest;
 public class RegistrationCommand implements Command {
     @Override
     public String execute(HttpServletRequest request){
-        String response = null;
+        String responsePage = null;
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         User user = new User();
         user.setName(login);
         user.setPassword(password);
+        user.setRole(1);
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         ClientService clientService = serviceFactory.getClientService();
         try {
             clientService.registration(user);
-            response = EnumPages.LIBRARY.getCode();
+            responsePage = EnumPages.USER_AUTH.getCode();
         } catch (ServiceException e) {
-            response = EnumPages.AUTH_FAILS.getCode();
+            responsePage = EnumPages.AUTH_FAILS.getCode();
         }
-        return response;
+        return responsePage;
     }
 }

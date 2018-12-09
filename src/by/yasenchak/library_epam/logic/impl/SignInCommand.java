@@ -1,5 +1,6 @@
 package by.yasenchak.library_epam.logic.impl;
 
+import by.yasenchak.library_epam.entity.User;
 import by.yasenchak.library_epam.exception.ServiceException;
 import by.yasenchak.library_epam.logic.Command;
 import by.yasenchak.library_epam.logic.EnumPages;
@@ -11,17 +12,18 @@ import javax.servlet.http.HttpServletRequest;
 public class SignInCommand implements Command {
     @Override
     public String execute(HttpServletRequest request){
-        String response = null;
+        String responsePage = null;
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         ClientService clientService = serviceFactory.getClientService();
         try {
-            clientService.signIn(login, password);
-            response = EnumPages.LIBRARY.getCode();
+            User user = clientService.signIn(login, password);
+            request.setAttribute("user", user);
+            responsePage = EnumPages.MAIN_PAGE.getCode();
         } catch (ServiceException e) {
-            response = EnumPages.AUTH_FAILS.getCode();
+            responsePage = EnumPages.AUTH_FAILS.getCode();
         }
-        return response;
+        return responsePage;
     }
 }

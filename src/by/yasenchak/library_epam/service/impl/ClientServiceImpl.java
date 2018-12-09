@@ -10,19 +10,22 @@ import by.yasenchak.library_epam.service.ClientService;
 
 public class ClientServiceImpl implements ClientService {
     @Override
-    public void signIn(String login, String password) throws ServiceException {
+    public User signIn(String login, String password) throws ServiceException {
         if(login == null || login.isEmpty() || password == null || password.isEmpty()){
             throw new ServiceException("Incorrect login");
         }
+        User user;
         DAOFactory daoFactory = DAOFactory.getInstance();
         UserDAO userDAO = daoFactory.getUserDAO();
         try {
-            if(!userDAO.signIn(login, password)){
-                throw new ServiceException("Incorrect password");
+            user = userDAO.signIn(login, password);
+            if(user == null){
+                throw new ServiceException("Wrong login or password");
             }
         } catch (SignInException e) {
             throw new ServiceException("Problem with sql", e);
         }
+        return user;
     }
 
     @Override
