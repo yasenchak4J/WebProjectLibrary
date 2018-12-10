@@ -1,6 +1,7 @@
 package by.yasenchak.library_epam.logic;
 
 
+import by.yasenchak.library_epam.logic.impl.AddNewBook;
 import by.yasenchak.library_epam.logic.impl.GetAllBookCommand;
 import by.yasenchak.library_epam.logic.impl.RegistrationCommand;
 import by.yasenchak.library_epam.logic.impl.SignInCommand;
@@ -16,6 +17,7 @@ public final class CommandHelper {
         commands.put("registration", new RegistrationCommand());
         commands.put("signin", new SignInCommand());
         commands.put("getAllBook", new GetAllBookCommand());
+        commands.put("addNewBook", new AddNewBook());
     }
 
     public static CommandHelper getInstance(){

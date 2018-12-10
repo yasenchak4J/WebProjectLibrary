@@ -8,4 +8,5 @@ import java.util.List;
 public interface BookService {
 
     List<Book> getAllBooks() throws ServiceException;
+    void addNewBook(Book book) throws ServiceException;
 }

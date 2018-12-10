@@ -15,12 +15,25 @@ public class BookServiceImpl implements BookService {
     public List<Book> getAllBooks() throws ServiceException {
         DAOFactory daoFactory = DAOFactory.getInstance();
         LibraryDAO libraryDAO = daoFactory.getLibraryDAO();
-        List<Book> books;
         try {
-            books = libraryDAO.getAllBook();
+            List<Book> books = libraryDAO.getAllBook();
+            return books;
         } catch (LibraryDAOException e) {
             throw new ServiceException("Problem with sql", e);
         }
-        return books;
+    }
+
+    @Override
+    public void addNewBook(Book book) throws ServiceException {
+        if(book == null || book.getName() == null){
+            throw new ServiceException("Incorrect book");
+        }
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        LibraryDAO libraryDAO = daoFactory.getLibraryDAO();
+        try {
+            libraryDAO.addNewBook(book);
+        } catch (LibraryDAOException e) {
+            throw new ServiceException("Problems with sql", e);
+        }
     }
 }

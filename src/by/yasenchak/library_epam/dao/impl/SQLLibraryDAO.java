@@ -16,8 +16,9 @@ public class SQLLibraryDAO implements LibraryDAO {
         List<Book> books = new ArrayList<>();
         String SQLquery = "SELECT * FROM books;" ;
         try(Connection conn = ConnectionPoolImpl.getInstance().getConnection(); Statement statement = conn.createStatement(); ResultSet result = statement.executeQuery(SQLquery)) {
-            if(result.next()) {
+            while(result.next()) {
                 Book book = new Book();
+                book.setId(result.getInt("id_book"));
                 book.setName(result.getString("name"));
                 book.setiSBN(result.getString("isbn"));
                 book.setImage(result.getBytes("image"));
@@ -33,7 +34,7 @@ public class SQLLibraryDAO implements LibraryDAO {
 
     @Override
     public void addNewBook(Book book) throws LibraryDAOException {
-        String SQLquery = "INSERT INTO books (name, pageCount, publisher, image, isbn) VALUES (?,?,?,?,?);";
+        String SQLquery = "INSERT INTO books (name, \"pageCount\", publisher, image, isbn) VALUES (?,?,?,?,?);";
         try(Connection conn = ConnectionPoolImpl.getInstance().getConnection(); PreparedStatement pstmt = conn.prepareStatement(SQLquery)) {
             pstmt.setString(1, book.getName());
             pstmt.setInt(2, book.getPageCount());
@@ -42,6 +43,7 @@ public class SQLLibraryDAO implements LibraryDAO {
             pstmt.setString(5, book.getiSBN());
             pstmt.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new LibraryDAOException("Problems with addNewBook", e);
         }
     }

@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class Book implements Serializable {
     private static final long serialVersionUID = -5609354029228990166L;
+    private int id;
     private String name;
     private int pageCount;
     private String iSBN;
@@ -87,6 +88,14 @@ public class Book implements Serializable {
         this.image = image;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -101,7 +110,7 @@ public class Book implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(getName(), getPageCount(), getiSBN(), getPublisher());
+        int result = Objects.hash(getName(), getPageCount(), getiSBN(), getPublisher(), getId());
         result = 31 * result + Arrays.hashCode(getImage());
         return result;
     }
