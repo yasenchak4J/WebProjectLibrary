@@ -10,14 +10,14 @@ public class Book implements Serializable {
     private int pageCount;
     private String iSBN;
     private String publisher;
-    private Author[] authors;
-    private Genre[] genres;
+    private Author authors;
+    private Genre genres;
     private byte[] image;
 
     public Book() {
     }
 
-    public Book(String name, int pageCount, String iSBN, String publisher, Author[] authors, Genre[] genres, byte[] image) {
+    public Book(String name, int pageCount, String iSBN, String publisher, Author authors, Genre genres, byte[] image) {
         this.name = name;
         this.pageCount = pageCount;
         this.iSBN = iSBN;
@@ -63,19 +63,19 @@ public class Book implements Serializable {
         this.publisher = publisher;
     }
 
-    public Author[] getAuthors() {
+    public Author getAuthors() {
         return authors;
     }
 
-    public void setAuthors(Author[] authors) {
+    public void setAuthors(Author authors) {
         this.authors = authors;
     }
 
-    public Genre[] getGenres() {
+    public Genre getGenres() {
         return genres;
     }
 
-    public void setGenres(Genre[] genres) {
+    public void setGenres(Genre genres) {
         this.genres = genres;
     }
 
@@ -96,16 +96,12 @@ public class Book implements Serializable {
                 getName().equals(book.getName()) &&
                 getiSBN().equals(book.getiSBN()) &&
                 getPublisher().equals(book.getPublisher()) &&
-                Arrays.equals(getAuthors(), book.getAuthors()) &&
-                Arrays.equals(getGenres(), book.getGenres()) &&
                 Arrays.equals(getImage(), book.getImage());
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hash(getName(), getPageCount(), getiSBN(), getPublisher());
-        result = 31 * result + Arrays.hashCode(getAuthors());
-        result = 31 * result + Arrays.hashCode(getGenres());
         result = 31 * result + Arrays.hashCode(getImage());
         return result;
     }

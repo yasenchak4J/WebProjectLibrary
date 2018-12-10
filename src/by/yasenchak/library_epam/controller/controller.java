@@ -40,7 +40,6 @@ public class controller extends HttpServlet
             RequestDispatcher requestDispatcher = req.getRequestDispatcher(response);
             requestDispatcher.forward(req, resp);
         }
-
     }
 
     @Override

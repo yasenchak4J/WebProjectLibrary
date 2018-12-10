@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface LibraryDAO {
     List<Book> getAllBook() throws LibraryDAOException;
+    void addNewBook(Book book) throws LibraryDAOException;
 }

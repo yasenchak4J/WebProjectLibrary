@@ -5,10 +5,7 @@ import by.yasenchak.library_epam.database.ConnectionPoolImpl;
 import by.yasenchak.library_epam.entity.Book;
 import by.yasenchak.library_epam.exception.dao_exception.LibraryDAOException;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,5 +29,20 @@ public class SQLLibraryDAO implements LibraryDAO {
             throw new LibraryDAOException("Problem with getAllBookMethod", e);
         }
         return books;
+    }
+
+    @Override
+    public void addNewBook(Book book) throws LibraryDAOException {
+        String SQLquery = "INSERT INTO books (name, pageCount, publisher, image, isbn) VALUES (?,?,?,?,?);";
+        try(Connection conn = ConnectionPoolImpl.getInstance().getConnection(); PreparedStatement pstmt = conn.prepareStatement(SQLquery)) {
+            pstmt.setString(1, book.getName());
+            pstmt.setInt(2, book.getPageCount());
+            pstmt.setString(3, book.getPublisher());
+            pstmt.setBytes(4, book.getImage());
+            pstmt.setString(5, book.getiSBN());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new LibraryDAOException("Problems with addNewBook", e);
+        }
     }
 }
