@@ -10,4 +10,5 @@ public interface LibraryDAO {
     void addNewBook(Book book) throws LibraryDAOException;
     void editBook(Book book) throws LibraryDAOException;
     Book getBookById(int id) throws LibraryDAOException;
+    void updateImageById(int id, String path) throws LibraryDAOException;
 }

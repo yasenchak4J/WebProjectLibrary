@@ -13,19 +13,19 @@ public class Book implements Serializable {
     private String publisher;
     private Author authors;
     private Genre genres;
-    private byte[] image;
+    private String imagePath;
 
     public Book() {
     }
 
-    public Book(String name, int pageCount, String iSBN, String publisher, Author authors, Genre genres, byte[] image) {
+    public Book(String name, int pageCount, String iSBN, String publisher, Author authors, Genre genres, String image) {
         this.name = name;
         this.pageCount = pageCount;
         this.iSBN = iSBN;
         this.publisher = publisher;
         this.authors = authors;
         this.genres = genres;
-        this.image = image;
+        this.imagePath = image;
     }
 
     public static long getSerialVersionUID() {
@@ -80,12 +80,12 @@ public class Book implements Serializable {
         this.genres = genres;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public int getId() {
@@ -104,14 +104,12 @@ public class Book implements Serializable {
         return getPageCount() == book.getPageCount() &&
                 getName().equals(book.getName()) &&
                 getiSBN().equals(book.getiSBN()) &&
-                getPublisher().equals(book.getPublisher()) &&
-                Arrays.equals(getImage(), book.getImage());
+                getPublisher().equals(book.getPublisher());
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hash(getName(), getPageCount(), getiSBN(), getPublisher(), getId());
-        result = 31 * result + Arrays.hashCode(getImage());
         return result;
     }
 }

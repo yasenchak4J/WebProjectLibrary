@@ -3,6 +3,7 @@ package by.yasenchak.library_epam.service;
 import by.yasenchak.library_epam.entity.Book;
 import by.yasenchak.library_epam.exception.ServiceException;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface BookService {
@@ -11,4 +12,5 @@ public interface BookService {
     void addNewBook(Book book) throws ServiceException;
     void editBook(Book book) throws ServiceException;
     Book getBookByID(int id) throws ServiceException;
+    void updateImageById(HttpServletRequest request) throws ServiceException;
 }

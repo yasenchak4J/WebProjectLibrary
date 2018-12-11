@@ -15,6 +15,16 @@
 <body>
     <div class="container-fluid h-100">
         <div class="row  align-items-center justify-content-center h-100">
+            <div class="row align-items-center justify-content-center">
+                <div class="col">
+                    <form action="upload" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file">
+                        <input type="hidden" name="id" value="${book.getId()}">
+                        <input type="hidden" name="action" value="setNewImage">
+                        <input type="submit" name="submit" value="Изменить фотографию">
+                    </form>
+                </div>
+            </div>
         <div class="row align-items-center justify-content-center">
             <div class="col">
                 <form action="index" method="post">
@@ -42,7 +52,7 @@
                     </div>
                     <div class="row align-items-center justify-content-center">
                         <div class="col">
-                            <input type="submit" name="submit">
+                            <input type="submit" name="Изменить">
                         </div>
                     </div>
                 </form>

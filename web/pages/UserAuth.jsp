@@ -30,7 +30,7 @@
             </form>
         </div>
         <div class="col-md-auto">
-            <form  method = "post">
+            <form  action="index" method = "post">
                 <h1>Форма регистрации</h1>
                 <input type="hidden" name="action" value="registration">
                 <input type="text" name="login" placeholder="Логин">
