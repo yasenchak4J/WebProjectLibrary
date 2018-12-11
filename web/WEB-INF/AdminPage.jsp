@@ -46,7 +46,7 @@
                  <div class="row">
                      <div class="cell">
                          <form action="index" method="post">
-                             <input type="hidden" name="action" value="editBook">
+                             <input type="hidden" name="action" value="getBookById">
                              <input type="hidden" name="id" value="${book.getId()}">
                              <input type="submit" name="submit" value="Изменить">
                          </form>

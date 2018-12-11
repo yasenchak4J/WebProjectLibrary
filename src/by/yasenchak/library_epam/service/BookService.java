@@ -9,4 +9,6 @@ public interface BookService {
 
     List<Book> getAllBooks() throws ServiceException;
     void addNewBook(Book book) throws ServiceException;
+    void editBook(Book book) throws ServiceException;
+    Book getBookByID(int id) throws ServiceException;
 }

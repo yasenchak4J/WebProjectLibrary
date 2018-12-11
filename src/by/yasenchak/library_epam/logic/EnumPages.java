@@ -5,6 +5,7 @@ public enum EnumPages {
     AUTH_FAILS("/pages/AuthFails.jsp"),
     USER_AUTH("/pages/UserAuth.jsp"),
     MAIN_PAGE("/index.jsp"),
+    EDIT_PAGE("/WEB-INF/EditBook.jsp"),
     ADMIN_PAGE("/WEB-INF/AdminPage.jsp");
 
     private String code;

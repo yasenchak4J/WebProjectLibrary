@@ -8,4 +8,6 @@ import java.util.List;
 public interface LibraryDAO {
     List<Book> getAllBook() throws LibraryDAOException;
     void addNewBook(Book book) throws LibraryDAOException;
+    void editBook(Book book) throws LibraryDAOException;
+    Book getBookById(int id) throws LibraryDAOException;
 }
