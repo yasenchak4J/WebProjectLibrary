@@ -12,5 +12,4 @@ public interface BookService {
     void addNewBook(Book book) throws ServiceException;
     void editBook(Book book) throws ServiceException;
     Book getBookByID(int id) throws ServiceException;
-    void updateImageById(HttpServletRequest request) throws ServiceException;
 }

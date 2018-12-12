@@ -53,17 +53,6 @@ public class SQLLibraryDAO implements LibraryDAO {
         }
     }
 
-    @Override
-    public void updateImageById(int id, String path) throws LibraryDAOException {
-        String SQLquery = "Update books SET image='" + path + "' WHERE id_book=" + id + ";";
-        try(Connection conn = ConnectionPoolImpl.getInstance().getConnection(); PreparedStatement pstmt = conn.prepareStatement(SQLquery)) {
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new LibraryDAOException("Problems with updateImage", e);
-        }
-    }
-
     private Book executeSelectQuery(ResultSet result) throws SQLException {
         Book book = new Book();
         book.setId(result.getInt("id_book"));

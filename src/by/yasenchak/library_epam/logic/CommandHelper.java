@@ -17,7 +17,6 @@ public final class CommandHelper {
         commands.put("addNewBook", new AddNewBook());
         commands.put("getBookById", new GetBookById());
         commands.put("editBook", new EditBook());
-        commands.put("setNewImage", new UpdateImageById());
     }
 
     public static CommandHelper getInstance(){
