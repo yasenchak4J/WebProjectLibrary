@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+<c:out value="${registration}"></c:out>
+<c:out value="${error}"></c:out>
 <div class="container-fluid h-100">
     <div class="row align-items-center justify-content-center h-100">
         <div class="col-md-auto">
