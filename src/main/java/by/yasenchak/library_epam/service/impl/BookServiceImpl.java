@@ -3,6 +3,7 @@ package by.yasenchak.library_epam.service.impl;
 import by.yasenchak.library_epam.dao.DAOFactory;
 import by.yasenchak.library_epam.dao.LibraryDAO;
 import by.yasenchak.library_epam.entity.Book;
+import by.yasenchak.library_epam.entity.Genre;
 import by.yasenchak.library_epam.exception.ServiceException;
 import by.yasenchak.library_epam.exception.dao_exception.LibraryDAOException;
 import by.yasenchak.library_epam.service.BookService;
@@ -67,6 +68,21 @@ public class BookServiceImpl implements BookService {
             return book;
         } catch (LibraryDAOException e) {
             throw new ServiceException("Problem with sql", e);
+        }
+    }
+
+    @Override
+    public List<Book> getBookByGenre(Genre genre) throws ServiceException {
+        if (genre == null){
+            throw new ServiceException("Incorrect genre");
+        }
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        LibraryDAO libraryDAO = daoFactory.getLibraryDAO();
+        try{
+            List<Book> books = libraryDAO.getBookByGenre(genre);
+            return books;
+        } catch (LibraryDAOException e) {
+            throw new ServiceException("Proble wit sql", e);
         }
     }
 }

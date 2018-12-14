@@ -4,27 +4,32 @@ import java.io.Serializable;
 
 public class Author implements Serializable {
     private static final long serialVersionUID = -7496647294059691785L;
-    private String authorName;
-    private String authorSurname;
+    private int id;
+    private String name;
+    private String surname;
 
     public Author(){
 
     }
 
-    public String getAuthorSurname() {
-        return authorSurname;
+    public String getNameAndSurname(){
+        return name + " " + surname;
     }
 
-    public void setAuthorSurname(String authorSurname) {
-        this.authorSurname = authorSurname;
+    public String getSurname() {
+        return surname;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -32,24 +37,32 @@ public class Author implements Serializable {
         if (this == o) return true;
         if (getClass() != o.getClass()) return false;
         Author author = (Author) o;
-        return author.getAuthorName().equals(getAuthorName()) &&
-                author.getAuthorSurname().equals(getAuthorSurname());
+        return author.getName().equals(getName()) &&
+                author.getSurname().equals(getSurname());
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + getAuthorName().hashCode();
-        result = prime * result + getAuthorSurname().hashCode();
+        result = prime * result + getName().hashCode();
+        result = prime * result + getSurname().hashCode();
         return result;
     }
 
     @Override
     public String toString() {
         return getClass() + " Author{" +
-                "authorName='" + authorName + '\'' +
-                ", authorSurname='" + authorSurname + '\'' +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
                 '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

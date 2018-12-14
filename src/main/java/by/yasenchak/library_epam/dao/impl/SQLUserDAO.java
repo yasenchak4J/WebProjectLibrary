@@ -10,8 +10,8 @@ import java.sql.*;
 
 
 public class SQLUserDAO implements UserDAO {
-    private static final String SIGN_IN_QUERY = "SELECT \"userName\", \"password\", \"role\" FROM users WHERE \"userName\" = ? ;";
-    private static final String REGISTRATION_QUERY = "INSERT INTO users(\"userName\", \"password\", \"role\") VALUES(? , ?, ?);";
+    private static final String SIGN_IN = "SELECT \"userName\", \"password\", \"role\" FROM users WHERE \"userName\" = ? ;";
+    private static final String REGISTRATION = "INSERT INTO users(\"userName\", \"password\", \"role\") VALUES(? , ?, ?);";
     private static final String SEARCH_USER_BY_LOGIN = "SELECT \"userName\" FROM users WHERE \"userName\" = ? ;";
 
     public SQLUserDAO(){
@@ -23,7 +23,7 @@ public class SQLUserDAO implements UserDAO {
     public User signIn(String login) throws SignInException{
         String passwordUser = "", userName = "";
         int role = 0;
-        try(Connection conn = ConnectionPoolImpl.getInstance().getConnection(); PreparedStatement statement = conn.prepareStatement(SIGN_IN_QUERY)) {
+        try(Connection conn = ConnectionPoolImpl.getInstance().getConnection(); PreparedStatement statement = conn.prepareStatement(SIGN_IN)) {
             statement.setString(1, login);
             ResultSet result = statement.executeQuery();
             if(result.next()) {
@@ -41,7 +41,7 @@ public class SQLUserDAO implements UserDAO {
     @Override
     public void registration(User user) throws RegistrationException
     {
-        try(Connection conn = ConnectionPoolImpl.getInstance().getConnection(); PreparedStatement statement = conn.prepareStatement(REGISTRATION_QUERY)) {
+        try(Connection conn = ConnectionPoolImpl.getInstance().getConnection(); PreparedStatement statement = conn.prepareStatement(REGISTRATION)) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getPassword());
             statement.setInt(3, user.getRole());

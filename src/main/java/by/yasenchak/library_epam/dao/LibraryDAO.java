@@ -1,6 +1,7 @@
 package by.yasenchak.library_epam.dao;
 
 import by.yasenchak.library_epam.entity.Book;
+import by.yasenchak.library_epam.entity.Genre;
 import by.yasenchak.library_epam.exception.dao_exception.LibraryDAOException;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface LibraryDAO {
     void editBook(Book book) throws LibraryDAOException;
     void editBookWitoutImage(Book book) throws LibraryDAOException;
     Book getBookById(int id) throws LibraryDAOException;
+    List<Book> getBookByGenre(Genre genre) throws LibraryDAOException;
 }

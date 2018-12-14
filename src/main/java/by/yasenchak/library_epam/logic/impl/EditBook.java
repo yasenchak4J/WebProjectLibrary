@@ -39,7 +39,7 @@ public class EditBook implements Command {
                 String path = request.getServletContext().getRealPath("images") + "\\" + uniqueName + formatImage;
                 InputStream stream = part.getInputStream();
                 Files.copy(stream, Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
-                path = "../images/" + uniqueName + formatImage;
+                path = "images/" + uniqueName + formatImage;
                 book.setImagePath(path);
             }
 

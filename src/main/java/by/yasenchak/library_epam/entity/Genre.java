@@ -4,18 +4,19 @@ import java.io.Serializable;
 
 public class Genre implements Serializable {
     private static final long serialVersionUID = 3644371445320968983L;
-    private String genreName;
+    private int id;
+    private String name;
 
     public Genre(){
 
     }
 
-    public String getGenreName() {
-        return genreName;
+    public String getName() {
+        return name;
     }
 
-    public void setGenreName(String genreName) {
-        this.genreName = genreName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -23,7 +24,7 @@ public class Genre implements Serializable {
         if (this == o) return true;
         if (getClass() != o.getClass()) return false;
         Genre genre = (Genre) o;
-        return genre.getGenreName().equals(getGenreName());
+        return genre.getName().equals(getName());
     }
 
     @Override
@@ -31,7 +32,15 @@ public class Genre implements Serializable {
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + getGenreName().hashCode();
+        result = prime * result + getName().hashCode();
         return result;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

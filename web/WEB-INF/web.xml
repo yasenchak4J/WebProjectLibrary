@@ -17,6 +17,11 @@
         <servlet-name>Controller</servlet-name>
         <url-pattern>/pages/index</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern></url-pattern>
+    </servlet-mapping>
     
     <resource-ref>
         <res-ref-name>jdbc/library</res-ref-name>

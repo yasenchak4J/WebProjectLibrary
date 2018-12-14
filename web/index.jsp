@@ -41,5 +41,45 @@
   <a href="?sessionLocale=ru"><fmt:message key="label.lang.ru" /> </a>
 
 
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col col-lg-1">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Active</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col">
+        <div class="row">
+          <c:forEach var="book" items="${books}">
+            <div class="col">
+              <div class="row">
+                <div class="col"><img src="${book.getImagePath()}" width="100" height="125"></div>
+              </div>
+              <div class="row">
+                <div class="col">Наименование: <c:out value="${book.getName()}"/></div>
+              </div>
+              <div class="row">
+                <div class="col">Количество страниц: <c:out value="${book.getPageCount()}"/> </div>
+              </div>
+              <div class="row">
+                <div class="col">ISBN: <c:out value="${book.getiSBN()}"/> </div>
+              </div>
+              <div class="row">
+                <div class="col">Издатель: <c:out value="${book.getPublisher()}"/> </div>
+              </div>
+            </div>
+          </c:forEach>
+        </div>
+      </div>
+    </div>
+  </div>
   </body>
 </html>
