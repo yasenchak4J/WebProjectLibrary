@@ -12,7 +12,7 @@
         <servlet-name>Controller</servlet-name>
         <url-pattern>/index</url-pattern>
     </servlet-mapping>
-    
+
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/pages/index</url-pattern>
