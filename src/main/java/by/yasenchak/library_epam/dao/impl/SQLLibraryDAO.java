@@ -1,10 +1,11 @@
 package by.yasenchak.library_epam.dao.impl;
 
 import by.yasenchak.library_epam.dao.LibraryDAO;
-import by.yasenchak.library_epam.database.ConnectionPoolImpl;
+import by.yasenchak.library_epam.dao.connection_pool.ConnectionPool;
 import by.yasenchak.library_epam.entity.Author;
 import by.yasenchak.library_epam.entity.Book;
 import by.yasenchak.library_epam.entity.Genre;
+import by.yasenchak.library_epam.exception.dao_exception.ConnectionPoolException;
 import by.yasenchak.library_epam.exception.dao_exception.LibraryDAOException;
 
 import java.sql.*;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SQLLibraryDAO implements LibraryDAO {
+
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final String ADD_NEW_BOOK = "INSERT INTO books (name, \"pageCount\", publisher, image, isbn) VALUES (?,?,?,?,?);";
     private static final String GET_ALL_BOOKS = "SELECT books.name, books.isbn, books.\"pageCount\", books.publisher, books.id_book, books.image, genre.name as genre, genre.id_genre, author.id_author, author.name as authorName, author.\"Surname\"" +
             " FROM books LEFT OUTER JOIN genre ON (books.id_genre = genre.id_genre) LEFT OUTER JOIN author ON (books.id_author = author.id_author)";
@@ -25,12 +28,14 @@ public class SQLLibraryDAO implements LibraryDAO {
     public List<Book> getAllBook() throws LibraryDAOException {
         List<Book> books = new ArrayList<>();
 
-        try(Connection conn = ConnectionPoolImpl.getInstance().getConnection(); Statement statement = conn.createStatement(); ResultSet result = statement.executeQuery(GET_ALL_BOOKS)) {
+        try(Connection conn = connectionPool.takeConnection(); Statement statement = conn.createStatement(); ResultSet result = statement.executeQuery(GET_ALL_BOOKS)) {
             while(result.next()) {
                 books.add(executeSelectQuery(result));
             }
         } catch (SQLException e) {
             throw new LibraryDAOException("Problem with getAllBookMethod", e);
+        } catch (ConnectionPoolException e) {
+            throw new LibraryDAOException("Problems with connection pool", e);
         }
         return books;
     }
@@ -48,7 +53,7 @@ public class SQLLibraryDAO implements LibraryDAO {
 
     @Override
     public void editBookWitoutImage(Book book) throws LibraryDAOException {
-        try(Connection conn = ConnectionPoolImpl.getInstance().getConnection(); PreparedStatement pstmt = conn.prepareStatement(EDIT_BOOK_WITHOUT_IMAGE)) {
+        try(Connection conn = connectionPool.takeConnection(); PreparedStatement pstmt = conn.prepareStatement(EDIT_BOOK_WITHOUT_IMAGE)) {
             pstmt.setString(1, book.getName());
             pstmt.setInt(2, book.getPageCount());
             pstmt.setString(3, book.getPublisher());
@@ -58,12 +63,14 @@ public class SQLLibraryDAO implements LibraryDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new LibraryDAOException("Problems with query", e);
+        } catch (ConnectionPoolException e) {
+            throw new LibraryDAOException("Problems with connection pool", e);
         }
     }
 
     @Override
     public Book getBookById(int id) throws LibraryDAOException {
-        try(Connection conn = ConnectionPoolImpl.getInstance().getConnection(); PreparedStatement statement = conn.prepareStatement(GET_BOOK_BY_ID)) {
+        try(Connection conn = connectionPool.takeConnection(); PreparedStatement statement = conn.prepareStatement(GET_BOOK_BY_ID)) {
             statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
             if(result.next()){
@@ -74,13 +81,15 @@ public class SQLLibraryDAO implements LibraryDAO {
             }
         } catch (SQLException e) {
             throw new LibraryDAOException("problem with getBookById", e);
+        } catch (ConnectionPoolException e) {
+            throw new LibraryDAOException("Problems with connection pool", e);
         }
     }
 
     @Override
     public List<Book> getBookByGenre(Genre genre) throws LibraryDAOException {
         List<Book> books = new ArrayList<>();
-        try(Connection conn = ConnectionPoolImpl.getInstance().getConnection(); PreparedStatement statement = conn.prepareStatement(GET_BOOK_BY_GENRE)) {
+        try(Connection conn = connectionPool.takeConnection(); PreparedStatement statement = conn.prepareStatement(GET_BOOK_BY_GENRE)) {
             statement.setString(1, genre.getName());
             ResultSet result = statement.executeQuery();
             while (result.next()){
@@ -88,6 +97,8 @@ public class SQLLibraryDAO implements LibraryDAO {
             }
         } catch (SQLException e) {
             throw new LibraryDAOException("problem with getBookByGenre", e);
+        } catch (ConnectionPoolException e) {
+            throw new LibraryDAOException("Problems with connection pool", e);
         }
         return books;
     }
@@ -115,7 +126,7 @@ public class SQLLibraryDAO implements LibraryDAO {
     }
 
     private void executeUpdateSQLQuery(String SQLquery, Book book) throws LibraryDAOException {
-        try(Connection conn = ConnectionPoolImpl.getInstance().getConnection(); PreparedStatement pstmt = conn.prepareStatement(SQLquery)) {
+        try(Connection conn =connectionPool.takeConnection(); PreparedStatement pstmt = conn.prepareStatement(SQLquery)) {
             pstmt.setString(1, book.getName());
             pstmt.setInt(2, book.getPageCount());
             pstmt.setString(3, book.getPublisher());
@@ -125,6 +136,8 @@ public class SQLLibraryDAO implements LibraryDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new LibraryDAOException("Problems with query", e);
+        } catch (ConnectionPoolException e) {
+            throw new LibraryDAOException("Problems with connection pool", e);
         }
     }
 

@@ -1,7 +1,7 @@
-package by.yasenchak.library_epam.logic;
+package by.yasenchak.library_epam.concrete_controller;
 
 
-import by.yasenchak.library_epam.logic.impl.*;
+import by.yasenchak.library_epam.concrete_controller.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;

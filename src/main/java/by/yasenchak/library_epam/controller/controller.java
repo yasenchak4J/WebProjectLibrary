@@ -1,9 +1,8 @@
 package by.yasenchak.library_epam.controller;
 
-import by.yasenchak.library_epam.entity.User;
-import by.yasenchak.library_epam.logic.Command;
-import by.yasenchak.library_epam.logic.CommandHelper;
-import by.yasenchak.library_epam.logic.EnumPages;
+import by.yasenchak.library_epam.concrete_controller.Command;
+import by.yasenchak.library_epam.concrete_controller.CommandHelper;
+import by.yasenchak.library_epam.concrete_controller.EnumPages;
 
 
 import javax.servlet.RequestDispatcher;
@@ -12,11 +11,10 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @MultipartConfig
-public class controller extends HttpServlet
+public class Controller extends HttpServlet
 {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

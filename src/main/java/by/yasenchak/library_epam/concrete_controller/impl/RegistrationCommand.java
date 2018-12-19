@@ -1,9 +1,9 @@
-package by.yasenchak.library_epam.logic.impl;
+package by.yasenchak.library_epam.concrete_controller.impl;
 
 import by.yasenchak.library_epam.entity.User;
 import by.yasenchak.library_epam.exception.ServiceException;
-import by.yasenchak.library_epam.logic.Command;
-import by.yasenchak.library_epam.logic.EnumPages;
+import by.yasenchak.library_epam.concrete_controller.Command;
+import by.yasenchak.library_epam.concrete_controller.EnumPages;
 import by.yasenchak.library_epam.service.ClientService;
 import by.yasenchak.library_epam.service.ServiceFactory;
 
