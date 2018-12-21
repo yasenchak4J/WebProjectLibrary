@@ -17,8 +17,7 @@ public class BookServiceImpl implements BookService {
         DAOFactory daoFactory = DAOFactory.getInstance();
         LibraryDAO libraryDAO = daoFactory.getLibraryDAO();
         try {
-            List<Book> books = libraryDAO.getAllBook();
-            return books;
+            return libraryDAO.getAllBook();
         } catch (LibraryDAOException e) {
             throw new ServiceException("Problem with sql", e);
         }
@@ -64,8 +63,7 @@ public class BookServiceImpl implements BookService {
         DAOFactory daoFactory = DAOFactory.getInstance();
         LibraryDAO libraryDAO = daoFactory.getLibraryDAO();
         try {
-            Book book = libraryDAO.getBookById(id);
-            return book;
+            return libraryDAO.getBookById(id);
         } catch (LibraryDAOException e) {
             throw new ServiceException("Problem with sql", e);
         }
@@ -79,8 +77,7 @@ public class BookServiceImpl implements BookService {
         DAOFactory daoFactory = DAOFactory.getInstance();
         LibraryDAO libraryDAO = daoFactory.getLibraryDAO();
         try{
-            List<Book> books = libraryDAO.getBookByGenre(genre);
-            return books;
+            return libraryDAO.getBookByGenre(genre);
         } catch (LibraryDAOException e) {
             throw new ServiceException("Problem wit sql", e);
         }
@@ -110,8 +107,7 @@ public class BookServiceImpl implements BookService {
         DAOFactory daoFactory = DAOFactory.getInstance();
         LibraryDAO libraryDAO = daoFactory.getLibraryDAO();
         try {
-            List<Book> books = libraryDAO.searchBook(text);
-            return books;
+            return libraryDAO.searchBook(text);
         } catch (LibraryDAOException e) {
             throw new ServiceException("Problem with sql", e);
         }

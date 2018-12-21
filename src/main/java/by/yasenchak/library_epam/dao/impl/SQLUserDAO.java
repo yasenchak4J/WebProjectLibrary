@@ -4,7 +4,6 @@ import by.yasenchak.library_epam.dao.UserDAO;
 import by.yasenchak.library_epam.dao.connection_pool.ConnectionPool;
 import by.yasenchak.library_epam.entity.User;
 import by.yasenchak.library_epam.exception.dao_exception.ConnectionPoolException;
-import by.yasenchak.library_epam.exception.dao_exception.LibraryDAOException;
 import by.yasenchak.library_epam.exception.dao_exception.RegistrationException;
 import by.yasenchak.library_epam.exception.dao_exception.SignInException;
 
@@ -37,8 +36,7 @@ public class SQLUserDAO implements UserDAO {
                 passwordUser = result.getString("password");
                 role = result.getInt("role");
             }
-            User user = new User(userName, passwordUser, role);
-            return user;
+            return new User(userName, passwordUser, role);
         } catch (SQLException e) {
             throw new SignInException("Problem with authorization", e);
         } catch (ConnectionPoolException e) {

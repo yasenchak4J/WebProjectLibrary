@@ -31,7 +31,7 @@ public class SQLGenreDAO implements GenreDAO {
                 genres.add(genre);
             }
         }  catch (ConnectionPoolException | SQLException e) {
-            e.printStackTrace();
+            throw new GenreDAOException("Problem with getAllGenre", e);
         }
         return genres;
     }

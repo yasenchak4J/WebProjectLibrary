@@ -15,8 +15,7 @@ public class GenreServiceImpl implements GenreService {
     public List<Genre> getAllGenre() throws ServiceException {
         GenreDAO genreDAO = DAOFactory.getInstance().getGenreDAO();
         try {
-            List<Genre> genres = genreDAO.getAllGenre();
-            return genres;
+            return genreDAO.getAllGenre();
         } catch (GenreDAOException e) {
             throw new ServiceException("Somthing wrong with sql", e);
         }
