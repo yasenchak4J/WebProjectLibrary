@@ -15,20 +15,20 @@ public class AddNewBook implements Command {
     public String execute(HttpServletRequest request) {
         String response = null;
         Book book = new Book();
-        book.setName(request.getParameter("name"));
-        book.setPublisher(request.getParameter("publisher"));
-        book.setPageCount(Integer.parseInt(request.getParameter("pageCount")));
-        book.setiSBN(request.getParameter("isbn"));
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        BookService bookService = serviceFactory.getBookService();
-        try {
-            bookService.addNewBook(book);
-            List<Book> books = bookService.getAllBooks();
-            request.setAttribute("books", books);
-            response = EnumPages.ADMIN_PAGE.getCode();
-        } catch (ServiceException e) {
-            response = EnumPages.ERROR_PAGE.getCode();
-        }
+            book.setName(request.getParameter("name"));
+            book.setPublisher(request.getParameter("publisher"));
+            book.setPageCount(Integer.parseInt(request.getParameter("pageCount")));
+            book.setiSBN(request.getParameter("isbn"));
+            ServiceFactory serviceFactory = ServiceFactory.getInstance();
+            BookService bookService = serviceFactory.getBookService();
+            try {
+                bookService.addNewBook(book);
+                List<Book> books = bookService.getAllBooks();
+                request.setAttribute("books", books);
+                response = EnumPages.ADMIN_PAGE.getCode();
+            } catch (ServiceException e) {
+                response = EnumPages.ERROR_PAGE.getCode();
+            }
         return response;
     }
 }

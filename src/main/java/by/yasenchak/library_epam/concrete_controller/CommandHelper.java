@@ -18,6 +18,7 @@ public final class CommandHelper {
         commands.put("getBookById", new GetBookById());
         commands.put("editBook", new EditBook());
         commands.put("getBookByGenre", new GetBooksByGenre());
+        commands.put("deleteBook", new DeleteBookByID());
     }
 
     public static CommandHelper getInstance(){

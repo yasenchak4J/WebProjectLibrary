@@ -27,7 +27,9 @@ public class SQLUserDAO implements UserDAO {
     public User signIn(String login) throws SignInException{
         String passwordUser = "", userName = "";
         int role = 0;
-        try(Connection conn = connectionPool.takeConnection(); PreparedStatement statement = conn.prepareStatement(SIGN_IN)) {
+        try(Connection conn = connectionPool.takeConnection();
+            PreparedStatement statement = conn.prepareStatement(SIGN_IN)) {
+
             statement.setString(1, login);
             ResultSet result = statement.executeQuery();
             if(result.next()) {
@@ -47,7 +49,9 @@ public class SQLUserDAO implements UserDAO {
     @Override
     public void registration(User user) throws RegistrationException
     {
-        try(Connection conn = connectionPool.takeConnection(); PreparedStatement statement = conn.prepareStatement(REGISTRATION)) {
+        try(Connection conn = connectionPool.takeConnection();
+            PreparedStatement statement = conn.prepareStatement(REGISTRATION)) {
+
             statement.setString(1, user.getName());
             statement.setString(2, user.getPassword());
             statement.setInt(3, user.getRole());
@@ -61,7 +65,9 @@ public class SQLUserDAO implements UserDAO {
 
     @Override
     public boolean userExist(User user) throws RegistrationException {
-        try(Connection conn = connectionPool.takeConnection(); PreparedStatement statement = conn.prepareStatement(SEARCH_USER_BY_LOGIN)){
+        try(Connection conn = connectionPool.takeConnection();
+            PreparedStatement statement = conn.prepareStatement(SEARCH_USER_BY_LOGIN)){
+
             boolean userNotExist;
             statement.setString(1, user.getName());
             ResultSet result = statement.executeQuery();

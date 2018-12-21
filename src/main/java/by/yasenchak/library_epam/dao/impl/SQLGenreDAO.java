@@ -21,7 +21,9 @@ public class SQLGenreDAO implements GenreDAO {
     @Override
     public List<Genre> getAllGenre() throws GenreDAOException {
         List<Genre> genres = new ArrayList<>();
-        try(Connection conn = connectionPool.takeConnection(); Statement statement = conn.createStatement(); ResultSet result = statement.executeQuery(GET_ALL_GENRE)) {
+        try(Connection conn = connectionPool.takeConnection(); Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(GET_ALL_GENRE)) {
+
             while(result.next()) {
                 Genre genre = new Genre();
                 genre.setId(result.getInt("id_genre"));

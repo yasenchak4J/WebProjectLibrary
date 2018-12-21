@@ -23,12 +23,15 @@ public class SQLLibraryDAO implements LibraryDAO {
     private String EDIT_BOOK_WITHOUT_IMAGE = "UPDATE books SET name= ? , \"pageCount\" = ? , publisher = ? , isbn= ? WHERE id_book = ?";
     private String GET_BOOK_BY_GENRE = "SELECT books.name, books.isbn, books.\"pageCount\", books.publisher, books.id_book, books.image, genre.name, author.name, author.\"Surname\"" +
             " FROM books LEFT OUTER JOIN genre ON (books.id_genre = genre.id_genre) LEFT OUTER JOIN author ON (books.id_author = author.id_author) WHERE genre.name= ?";
+    private String DELETE_BOOK_BY_ID = "DELETE FROM books WHERE id_book = ?";
 
     @Override
     public List<Book> getAllBook() throws LibraryDAOException {
         List<Book> books = new ArrayList<>();
 
-        try(Connection conn = connectionPool.takeConnection(); Statement statement = conn.createStatement(); ResultSet result = statement.executeQuery(GET_ALL_BOOKS)) {
+        try(Connection conn = connectionPool.takeConnection(); Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(GET_ALL_BOOKS)) {
+
             while(result.next()) {
                 books.add(executeSelectQuery(result));
             }
@@ -53,7 +56,9 @@ public class SQLLibraryDAO implements LibraryDAO {
 
     @Override
     public void editBookWitoutImage(Book book) throws LibraryDAOException {
-        try(Connection conn = connectionPool.takeConnection(); PreparedStatement pstmt = conn.prepareStatement(EDIT_BOOK_WITHOUT_IMAGE)) {
+        try(Connection conn = connectionPool.takeConnection();
+            PreparedStatement pstmt = conn.prepareStatement(EDIT_BOOK_WITHOUT_IMAGE)) {
+
             pstmt.setString(1, book.getName());
             pstmt.setInt(2, book.getPageCount());
             pstmt.setString(3, book.getPublisher());
@@ -70,7 +75,9 @@ public class SQLLibraryDAO implements LibraryDAO {
 
     @Override
     public Book getBookById(int id) throws LibraryDAOException {
-        try(Connection conn = connectionPool.takeConnection(); PreparedStatement statement = conn.prepareStatement(GET_BOOK_BY_ID)) {
+        try(Connection conn = connectionPool.takeConnection();
+            PreparedStatement statement = conn.prepareStatement(GET_BOOK_BY_ID)) {
+
             statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
             if(result.next()){
@@ -89,7 +96,9 @@ public class SQLLibraryDAO implements LibraryDAO {
     @Override
     public List<Book> getBookByGenre(Genre genre) throws LibraryDAOException {
         List<Book> books = new ArrayList<>();
-        try(Connection conn = connectionPool.takeConnection(); PreparedStatement statement = conn.prepareStatement(GET_BOOK_BY_GENRE)) {
+        try(Connection conn = connectionPool.takeConnection();
+            PreparedStatement statement = conn.prepareStatement(GET_BOOK_BY_GENRE)) {
+
             statement.setString(1, genre.getName());
             ResultSet result = statement.executeQuery();
             while (result.next()){
@@ -101,6 +110,18 @@ public class SQLLibraryDAO implements LibraryDAO {
             throw new LibraryDAOException("Problems with connection pool", e);
         }
         return books;
+    }
+
+    @Override
+    public void deleteBookById(int id) throws LibraryDAOException {
+        try(Connection conn =connectionPool.takeConnection();
+            PreparedStatement pstmt = conn.prepareStatement(DELETE_BOOK_BY_ID)) {
+
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new LibraryDAOException("problem with deleteBook", e);
+        }
     }
 
     private Book executeSelectQuery(ResultSet result) throws SQLException {
@@ -126,7 +147,9 @@ public class SQLLibraryDAO implements LibraryDAO {
     }
 
     private void executeUpdateSQLQuery(String SQLquery, Book book) throws LibraryDAOException {
-        try(Connection conn =connectionPool.takeConnection(); PreparedStatement pstmt = conn.prepareStatement(SQLquery)) {
+        try(Connection conn =connectionPool.takeConnection();
+            PreparedStatement pstmt = conn.prepareStatement(SQLquery)) {
+
             pstmt.setString(1, book.getName());
             pstmt.setInt(2, book.getPageCount());
             pstmt.setString(3, book.getPublisher());

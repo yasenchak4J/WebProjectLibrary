@@ -82,7 +82,22 @@ public class BookServiceImpl implements BookService {
             List<Book> books = libraryDAO.getBookByGenre(genre);
             return books;
         } catch (LibraryDAOException e) {
-            throw new ServiceException("Proble wit sql", e);
+            throw new ServiceException("Problem wit sql", e);
+        }
+    }
+
+    @Override
+    public void deleteBook(int id) throws ServiceException {
+        if (id < 0){
+            throw new ServiceException("Incorrect id");
+        }
+
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        LibraryDAO libraryDAO = daoFactory.getLibraryDAO();
+        try {
+            libraryDAO.deleteBookById(id);
+        } catch (LibraryDAOException e) {
+            throw new ServiceException("Problem with sql", e);
         }
     }
 }

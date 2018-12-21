@@ -14,4 +14,5 @@ public interface BookService {
     void editBook(Book book) throws ServiceException;
     Book getBookByID(int id) throws ServiceException;
     List<Book> getBookByGenre(Genre genre) throws  ServiceException;
+    void deleteBook(int id) throws  ServiceException;
 }

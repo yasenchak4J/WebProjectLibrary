@@ -13,4 +13,5 @@ public interface LibraryDAO {
     void editBookWitoutImage(Book book) throws LibraryDAOException;
     Book getBookById(int id) throws LibraryDAOException;
     List<Book> getBookByGenre(Genre genre) throws LibraryDAOException;
+    void deleteBookById(int id) throws LibraryDAOException;
 }

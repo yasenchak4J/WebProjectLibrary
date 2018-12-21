@@ -54,6 +54,13 @@
                              <input type="submit" name="submit" value="Изменить">
                          </form>
                      </div>
+                     <div class="cell">
+                         <form action="index" method="post">
+                             <input type="hidden" name="action" value="deleteBook">
+                             <input type="hidden" name="id" value="${book.getId()}">
+                             <input type="submit" name="submit" value="Удалить">
+                         </form>
+                     </div>
                  </div>
              </div>
          </c:forEach>
