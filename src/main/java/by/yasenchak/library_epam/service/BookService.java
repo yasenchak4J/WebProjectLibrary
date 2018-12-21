@@ -4,7 +4,6 @@ import by.yasenchak.library_epam.entity.Book;
 import by.yasenchak.library_epam.entity.Genre;
 import by.yasenchak.library_epam.exception.ServiceException;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface BookService {
@@ -15,4 +14,5 @@ public interface BookService {
     Book getBookByID(int id) throws ServiceException;
     List<Book> getBookByGenre(Genre genre) throws  ServiceException;
     void deleteBook(int id) throws  ServiceException;
+    List<Book> searchBooks(String text) throws ServiceException;
 }

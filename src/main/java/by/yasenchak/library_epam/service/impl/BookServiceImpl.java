@@ -100,4 +100,20 @@ public class BookServiceImpl implements BookService {
             throw new ServiceException("Problem with sql", e);
         }
     }
+
+    @Override
+    public List<Book> searchBooks(String text) throws ServiceException {
+        if(text.isEmpty()){
+            throw new ServiceException("Incorrect search parameter");
+        }
+
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        LibraryDAO libraryDAO = daoFactory.getLibraryDAO();
+        try {
+            List<Book> books = libraryDAO.searchBook(text);
+            return books;
+        } catch (LibraryDAOException e) {
+            throw new ServiceException("Problem with sql", e);
+        }
+    }
 }

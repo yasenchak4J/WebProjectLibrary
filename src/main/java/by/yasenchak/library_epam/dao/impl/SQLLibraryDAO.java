@@ -24,6 +24,8 @@ public class SQLLibraryDAO implements LibraryDAO {
     private String GET_BOOK_BY_GENRE = "SELECT books.name, books.isbn, books.\"pageCount\", books.publisher, books.id_book, books.image, genre.name, author.name, author.\"Surname\"" +
             " FROM books LEFT OUTER JOIN genre ON (books.id_genre = genre.id_genre) LEFT OUTER JOIN author ON (books.id_author = author.id_author) WHERE genre.name= ?";
     private String DELETE_BOOK_BY_ID = "DELETE FROM books WHERE id_book = ?";
+    private String SEARCH_BOOK = "SELECT books.name, books.isbn, books.\"pageCount\", books.publisher, books.id_book, books.image, genre.name as genre, genre.id_genre, author.id_author, author.name as authorName, author.\"Surname\"" +
+            " FROM books LEFT OUTER JOIN genre ON (books.id_genre = genre.id_genre) LEFT OUTER JOIN author ON (books.id_author = author.id_author) WHERE books.name LIKE ?";
 
     @Override
     public List<Book> getAllBook() throws LibraryDAOException {
@@ -122,6 +124,25 @@ public class SQLLibraryDAO implements LibraryDAO {
         } catch (SQLException | ConnectionPoolException e) {
             throw new LibraryDAOException("problem with deleteBook", e);
         }
+    }
+
+    @Override
+    public List<Book> searchBook(String text) throws LibraryDAOException {
+        List<Book> books = new ArrayList<>();
+        try(Connection conn = connectionPool.takeConnection();
+            PreparedStatement statement = conn.prepareStatement(SEARCH_BOOK)) {
+
+            statement.setString(1, "%" + text + "%");
+            ResultSet result = statement.executeQuery();
+            while (result.next()){
+                books.add(executeSelectQuery(result));
+            }
+        } catch (SQLException e) {
+            throw new LibraryDAOException("problem with searchBook", e);
+        } catch (ConnectionPoolException e) {
+            throw new LibraryDAOException("Problems with connection pool", e);
+        }
+        return books;
     }
 
     private Book executeSelectQuery(ResultSet result) throws SQLException {

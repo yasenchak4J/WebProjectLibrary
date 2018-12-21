@@ -27,9 +27,10 @@
           <a class="nav-link" href="#">Profile</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <form class="form-inline my-2 my-lg-0" action="index">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" name="textSearch" aria-label="Search">
+        <input type="hidden" name="action" value="search">
+        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search">
       </form>
     </div>
   </nav>

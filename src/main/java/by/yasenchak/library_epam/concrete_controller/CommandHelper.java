@@ -19,6 +19,7 @@ public final class CommandHelper {
         commands.put("editBook", new EditBook());
         commands.put("getBookByGenre", new GetBooksByGenre());
         commands.put("deleteBook", new DeleteBookByID());
+        commands.put("search", new SearchByText());
     }
 
     public static CommandHelper getInstance(){

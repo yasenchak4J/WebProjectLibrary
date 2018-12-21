@@ -14,4 +14,5 @@ public interface LibraryDAO {
     Book getBookById(int id) throws LibraryDAOException;
     List<Book> getBookByGenre(Genre genre) throws LibraryDAOException;
     void deleteBookById(int id) throws LibraryDAOException;
+    List<Book> searchBook(String text) throws LibraryDAOException;
 }
