@@ -12,7 +12,7 @@ public interface LibraryDAO {
     void editBook(Book book) throws LibraryDAOException;
     void editBookWitoutImage(Book book) throws LibraryDAOException;
     Book getBookById(int id) throws LibraryDAOException;
-    List<Book> getBookByGenre(Genre genre) throws LibraryDAOException;
+    List<Book> getBookByGenre(String genreName) throws LibraryDAOException;
     void deleteBookById(int id) throws LibraryDAOException;
     List<Book> searchBook(String text) throws LibraryDAOException;
 }

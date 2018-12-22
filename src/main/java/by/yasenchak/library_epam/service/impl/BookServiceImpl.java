@@ -70,14 +70,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> getBookByGenre(Genre genre) throws ServiceException {
-        if (genre == null){
+    public List<Book> getBookByGenre(String genreName) throws ServiceException {
+        if (genreName.isEmpty()){
             throw new ServiceException("Incorrect genre");
         }
         DAOFactory daoFactory = DAOFactory.getInstance();
         LibraryDAO libraryDAO = daoFactory.getLibraryDAO();
         try{
-            return libraryDAO.getBookByGenre(genre);
+            return libraryDAO.getBookByGenre(genreName);
         } catch (LibraryDAOException e) {
             throw new ServiceException("Problem wit sql", e);
         }

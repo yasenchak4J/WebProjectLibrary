@@ -46,15 +46,15 @@
     <div class="row">
       <div class="col col-lg-1">
         <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Active</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
+            <c:forEach var="genre" items="${genres}">
+              <form action="index" id="${genre.getId()}">
+                <input type="hidden" name="action" value="getBookByGenre">
+                <li class="nav-item">
+                  <input type="hidden" name="genre" value="${genre.getName()}">
+                  <a class="nav-link" href="#" onclick="document.getElementById('${genre.getId()}').submit(); return false;">${genre.getName()}</a>
+                </li>
+              </form>
+            </c:forEach>
         </ul>
       </div>
       <div class="col">

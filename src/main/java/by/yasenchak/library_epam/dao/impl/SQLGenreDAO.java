@@ -27,7 +27,7 @@ public class SQLGenreDAO implements GenreDAO {
             while(result.next()) {
                 Genre genre = new Genre();
                 genre.setId(result.getInt("id_genre"));
-                genre.setName(result.getString("name"));
+                genre.setName(result.getString("genreName"));
                 genres.add(genre);
             }
         }  catch (ConnectionPoolException | SQLException e) {

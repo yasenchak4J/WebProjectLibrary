@@ -1,7 +1,6 @@
 package by.yasenchak.library_epam.concrete_controller.impl;
 
 import by.yasenchak.library_epam.entity.Book;
-import by.yasenchak.library_epam.entity.Genre;
 import by.yasenchak.library_epam.exception.ServiceException;
 import by.yasenchak.library_epam.concrete_controller.Command;
 import by.yasenchak.library_epam.concrete_controller.EnumPages;
@@ -15,8 +14,7 @@ public class GetBooksByGenre implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         String response = null;
-        Genre genre = new Genre();
-        genre.setName(request.getParameter("genre"));
+        String genre = request.getParameter("genre");
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         BookService bookService = serviceFactory.getBookService();
         try {
@@ -24,6 +22,7 @@ public class GetBooksByGenre implements Command {
             request.setAttribute("books", books);
             response = EnumPages.MAIN_PAGE.getCode();
         } catch (ServiceException e) {
+            e.printStackTrace();
             response = EnumPages.ERROR_PAGE.getCode();
         }
         return response;
