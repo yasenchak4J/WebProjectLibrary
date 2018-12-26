@@ -3,9 +3,8 @@ package by.yasenchak.library_epam.service.impl;
 import by.yasenchak.library_epam.dao.DAOFactory;
 import by.yasenchak.library_epam.dao.UserDAO;
 import by.yasenchak.library_epam.entity.User;
-import by.yasenchak.library_epam.exception.dao_exception.RegistrationException;
 import by.yasenchak.library_epam.exception.ServiceException;
-import by.yasenchak.library_epam.exception.dao_exception.SignInException;
+import by.yasenchak.library_epam.exception.dao_exception.UserDAOException;
 import by.yasenchak.library_epam.service.ClientService;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -25,7 +24,7 @@ public class ClientServiceImpl implements ClientService {
             } else {
                 return null;
             }
-        } catch (SignInException e) {
+        } catch (UserDAOException e) {
             throw new ServiceException("Problem with sql", e);
         }
     }
@@ -48,7 +47,7 @@ public class ClientServiceImpl implements ClientService {
             } else {
                 return false;
             }
-        } catch (RegistrationException e) {
+        } catch (UserDAOException e) {
             throw new ServiceException("Problem with registration", e);
         }
     }

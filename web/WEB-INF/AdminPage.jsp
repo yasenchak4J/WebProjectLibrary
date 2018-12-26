@@ -32,7 +32,7 @@
          <c:forEach var="book" items="${books}">
              <div class="col">
                  <div class="row">
-                     <div class="col"><img src="../${ book.getImagePath()}" width="100" height="125"></div>
+                     <div class="col"><img src="${ book.getImagePath()}" width="100" height="125"></div>
                  </div>
                  <div class="row">
                      <div class="col">Наименование: <c:out value="${book.getName()}"/></div>

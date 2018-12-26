@@ -20,6 +20,10 @@ public final class CommandHelper {
         commands.put("getBookByGenre", new GetBooksByGenre());
         commands.put("deleteBook", new DeleteBookByID());
         commands.put("search", new SearchByText());
+        commands.put("signOut", new SignOut());
+        commands.put("goToProfile", new GoToProfile());
+        commands.put("subscriptionBook", new SubscriptionBook());
+        commands.put("goToAuthPage", new GoToAuth());
     }
 
     public static CommandHelper getInstance(){

@@ -3,7 +3,6 @@ package by.yasenchak.library_epam.service.impl;
 import by.yasenchak.library_epam.dao.DAOFactory;
 import by.yasenchak.library_epam.dao.LibraryDAO;
 import by.yasenchak.library_epam.entity.Book;
-import by.yasenchak.library_epam.entity.Genre;
 import by.yasenchak.library_epam.exception.ServiceException;
 import by.yasenchak.library_epam.exception.dao_exception.LibraryDAOException;
 import by.yasenchak.library_epam.service.BookService;

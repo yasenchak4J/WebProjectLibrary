@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <fmt:setLocale value="${param.lang}"/>
 <fmt:setBundle basename="messages"/>
@@ -12,6 +13,10 @@
   </head>
   <body>
 
+
+  <%
+    System.out.println(request.getRequestURL().toString());
+  %>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Library</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,7 +29,34 @@
           <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Profile</a>
+          <a class="nav-link" href="?sessionLocale=en"><fmt:message key="label.lang.en" /></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="?sessionLocale=ru"><fmt:message key="label.lang.ru" /> </a>
+        </li>
+        <c:if test="${user != null}">
+          <li class="nav-item">
+            <form action="index" id="profile" method="post">
+              <input type="hidden" name="action" value="goToProfile">
+              <a class="nav-link" href="#" onclick="document.getElementById('profile').submit(); return false;">Profile</a>
+            </form>
+          </li>
+        </c:if>
+      </ul>
+      <ul class="nav justify-content-end">
+        <li class="nav-item">
+          <c:if test="${user != null}">
+            <form action="index" method="post" id="signOut">
+              <input type="hidden" name="action" value="signOut">
+                ${user.getName()}, <a class="nav-link" href="#" onclick="document.getElementById('signOut').submit(); return false;">SignOut</a>
+            </form>
+          </c:if>
+          <c:if test="${user == null}">
+          <form action="index" method="post" id="goToAuthPage">
+            <input type="hidden" name="action" value="goToAuthPage">
+            <a class="nav-link" href="#"  onclick="document.getElementById('goToAuthPage').submit(); return false;">SignIn</a>
+          </form>
+          </c:if>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0" action="index">
@@ -34,13 +66,6 @@
       </form>
     </div>
   </nav>
-
-  <a href="pages/UserAuth.jsp">SignIn</a>
-
-  <a href="?sessionLocale=en"> <fmt:message key="label.lang.en" /></a>
-
-  <a href="?sessionLocale=ru"><fmt:message key="label.lang.ru" /> </a>
-
 
   <div class="container-fluid">
     <div class="row">
@@ -75,6 +100,21 @@
               </div>
               <div class="row">
                 <div class="col">Издатель: <c:out value="${book.getPublisher()}"/> </div>
+              </div>
+              <div class="row">
+                <div class="col">Жанр: <c:out value="${book.getGenres().getName()}"/> </div>
+              </div>
+              <div class="row">
+                <div class="col">Автор: <c:out value="${book.getAuthors().getNameAndSurname()}"/> </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <form action="index" id="book ${book.getId()}" method="post">
+                    <input type="hidden" name="action" value="subscriptionBook">
+                    <input type="hidden" name="book" value="${book.getId()}">
+                    <a class="nav-link" href="#" onclick="document.getElementById('book ${book.getId()}').submit(); return false;">Take book</a>
+                  </form>
+                </div>
               </div>
             </div>
           </c:forEach>

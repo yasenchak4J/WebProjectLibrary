@@ -4,8 +4,7 @@ import by.yasenchak.library_epam.dao.UserDAO;
 import by.yasenchak.library_epam.dao.connection_pool.ConnectionPool;
 import by.yasenchak.library_epam.entity.User;
 import by.yasenchak.library_epam.exception.dao_exception.ConnectionPoolException;
-import by.yasenchak.library_epam.exception.dao_exception.RegistrationException;
-import by.yasenchak.library_epam.exception.dao_exception.SignInException;
+import by.yasenchak.library_epam.exception.dao_exception.UserDAOException;
 
 import java.sql.*;
 
@@ -23,7 +22,7 @@ public class SQLUserDAO implements UserDAO {
 
 
     @Override
-    public User signIn(String login) throws SignInException{
+    public User signIn(String login) throws UserDAOException {
         String passwordUser = "", userName = "";
         int role = 0;
         try(Connection conn = connectionPool.takeConnection();
@@ -38,14 +37,14 @@ public class SQLUserDAO implements UserDAO {
             }
             return new User(userName, passwordUser, role);
         } catch (SQLException e) {
-            throw new SignInException("Problem with authorization", e);
+            throw new UserDAOException("Problem with authorization", e);
         } catch (ConnectionPoolException e) {
-            throw new SignInException("Problems with connection pool", e);
+            throw new UserDAOException("Problems with connection pool", e);
         }
     }
 
     @Override
-    public void registration(User user) throws RegistrationException
+    public void registration(User user) throws UserDAOException
     {
         try(Connection conn = connectionPool.takeConnection();
             PreparedStatement statement = conn.prepareStatement(REGISTRATION)) {
@@ -55,14 +54,14 @@ public class SQLUserDAO implements UserDAO {
             statement.setInt(3, user.getRole());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RegistrationException("Problem with Registration", e);
+            throw new UserDAOException("Problem with Registration", e);
         } catch (ConnectionPoolException e) {
-            throw new RegistrationException("Problems with connection pool", e);
+            throw new UserDAOException("Problems with connection pool", e);
         }
     }
 
     @Override
-    public boolean userExist(User user) throws RegistrationException {
+    public boolean userExist(User user) throws UserDAOException {
         try(Connection conn = connectionPool.takeConnection();
             PreparedStatement statement = conn.prepareStatement(SEARCH_USER_BY_LOGIN)){
 
@@ -72,9 +71,9 @@ public class SQLUserDAO implements UserDAO {
             userNotExist = !result.next();
             return userNotExist;
         } catch (SQLException e) {
-            throw new RegistrationException("Problem with FindUser", e);
+            throw new UserDAOException("Problem with FindUser", e);
         } catch (ConnectionPoolException e) {
-            throw new RegistrationException("Problems with connection pool", e);
+            throw new UserDAOException("Problems with connection pool", e);
         }
     }
 }

@@ -2,7 +2,7 @@ package by.yasenchak.library_epam.entity;
 
 import java.io.Serializable;
 
-public class Genre implements Serializable {
+public class Genre implements Serializable, Comparable<Genre> {
     private static final long serialVersionUID = 3644371445320968983L;
     private int id;
     private String name;
@@ -45,4 +45,8 @@ public class Genre implements Serializable {
     }
 
 
+    @Override
+    public int compareTo(Genre o) {
+        return this.getName().compareTo(o.getName());
+    }
 }

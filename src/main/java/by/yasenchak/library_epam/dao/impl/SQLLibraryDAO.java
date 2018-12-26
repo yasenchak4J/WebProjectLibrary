@@ -18,7 +18,8 @@ public class SQLLibraryDAO implements LibraryDAO {
     private static final String ADD_NEW_BOOK = "INSERT INTO books (name, \"pageCount\", publisher, image, isbn) VALUES (?,?,?,?,?);";
     private static final String GET_ALL_BOOKS = "SELECT books.name, books.isbn, books.\"pageCount\", books.publisher, books.id_book, books.image,  genre.\"genreName\", genre.id_genre, author.id_author, author.\"authorName\", author.\"Surname\"" +
             " FROM books LEFT OUTER JOIN genre ON (books.id_genre = genre.id_genre) LEFT OUTER JOIN author ON (books.id_author = author.id_author)";
-    private static final String GET_BOOK_BY_ID = "SELECT * FROM books where id_book= ? ;";
+    private static final String GET_BOOK_BY_ID = "SELECT books.name, books.isbn, books.\"pageCount\", books.publisher, books.id_book, books.image,  genre.\"genreName\", genre.id_genre, author.id_author, author.\"authorName\", author.\"Surname\"" +
+            " FROM books LEFT OUTER JOIN genre ON (books.id_genre = genre.id_genre) LEFT OUTER JOIN author ON (books.id_author = author.id_author) WHERE books.id_book = ?";
     private String EDIT_BOOK = "UPDATE books SET name= ? , \"pageCount\" = ? , publisher = ? , image = ? , isbn= ? WHERE id_book =";
     private String EDIT_BOOK_WITHOUT_IMAGE = "UPDATE books SET name= ? , \"pageCount\" = ? , publisher = ? , isbn= ? WHERE id_book = ?";
     private String GET_BOOK_BY_GENRE = "SELECT books.name, books.isbn, books.\"pageCount\", books.publisher, books.id_book, books.image, genre.id_genre, genre.\"genreName\", author.\"authorName\", author.id_author, author.\"Surname\"" +

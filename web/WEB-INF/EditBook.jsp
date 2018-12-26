@@ -19,7 +19,7 @@
             <div class="col">
                 <div class="row align-items-center justify-content-center">
                     <div class="col">
-                        <img src="../${book.getImagePath()}">
+                        <img src="${book.getImagePath()}">
                     </div>
                 </div>
                 <form action="index" method="post" enctype="multipart/form-data">
