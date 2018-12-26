@@ -12,6 +12,14 @@ public class Subscription implements Serializable {
     private String dateOut;
     private int userId;
     private String type;
+    private boolean active;
+
+    public Subscription(int bookId, int userId, String type, boolean active){
+        this.bookId = bookId;
+        this.userId = userId;
+        this.type = type;
+        this.active = active;
+    }
 
     public int getId() {
         return id;
@@ -61,6 +69,14 @@ public class Subscription implements Serializable {
         this.type = type;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,4 +93,6 @@ public class Subscription implements Serializable {
     public int hashCode() {
         return Objects.hash(getId(), getBookId(), getDateIn(), getDateOut(), getUserId());
     }
+
+
 }

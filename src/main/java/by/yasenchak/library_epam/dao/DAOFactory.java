@@ -2,6 +2,7 @@ package by.yasenchak.library_epam.dao;
 
 import by.yasenchak.library_epam.dao.impl.SQLGenreDAO;
 import by.yasenchak.library_epam.dao.impl.SQLLibraryDAO;
+import by.yasenchak.library_epam.dao.impl.SQLSubscriptionDAO;
 import by.yasenchak.library_epam.dao.impl.SQLUserDAO;
 
 public final class DAOFactory {
@@ -9,6 +10,7 @@ public final class DAOFactory {
     private final LibraryDAO sqlLibrary = new SQLLibraryDAO();
     private final UserDAO sqlUser = new SQLUserDAO();
     private final GenreDAO genreDAO = new SQLGenreDAO();
+    private final SubscriptionDAO subscriptionDAO = new SQLSubscriptionDAO();
 
     private DAOFactory(){}
 
@@ -26,5 +28,9 @@ public final class DAOFactory {
 
     public GenreDAO getGenreDAO(){
         return genreDAO;
+    }
+
+    public SubscriptionDAO getSubscriptionDAO(){
+        return subscriptionDAO;
     }
 }

@@ -24,6 +24,7 @@ public final class CommandHelper {
         commands.put("goToProfile", new GoToProfile());
         commands.put("subscriptionBook", new SubscriptionBook());
         commands.put("goToAuthPage", new GoToAuth());
+        commands.put("addToSubs", new AddNewSubscription());
     }
 
     public static CommandHelper getInstance(){

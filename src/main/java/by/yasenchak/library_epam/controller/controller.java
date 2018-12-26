@@ -25,7 +25,6 @@ public class Controller extends HttpServlet
             RequestDispatcher requestDispatcher = req.getRequestDispatcher(EnumPages.MAIN_PAGE.getCode());
             requestDispatcher.forward(req, resp);
         }
-
     }
 
     @Override

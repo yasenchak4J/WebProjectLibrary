@@ -12,7 +12,7 @@ import java.sql.*;
 public class SQLUserDAO implements UserDAO {
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
-    private static final String SIGN_IN = "SELECT \"userName\", \"password\", \"role\" FROM users WHERE \"userName\" = ? ;";
+    private static final String SIGN_IN = "SELECT \"userName\", \"password\", \"role\", \"idUsers\" FROM users WHERE \"userName\" = ? ;";
     private static final String REGISTRATION = "INSERT INTO users(\"userName\", \"password\", \"role\") VALUES(? , ?, ?);";
     private static final String SEARCH_USER_BY_LOGIN = "SELECT \"userName\" FROM users WHERE \"userName\" = ? ;";
 
@@ -24,7 +24,7 @@ public class SQLUserDAO implements UserDAO {
     @Override
     public User signIn(String login) throws UserDAOException {
         String passwordUser = "", userName = "";
-        int role = 0;
+        int role = 0, userId = -1;
         try(Connection conn = connectionPool.takeConnection();
             PreparedStatement statement = conn.prepareStatement(SIGN_IN)) {
 
@@ -34,8 +34,9 @@ public class SQLUserDAO implements UserDAO {
                 userName = result.getString("userName");
                 passwordUser = result.getString("password");
                 role = result.getInt("role");
+                userId = result.getInt("idUsers");
             }
-            return new User(userName, passwordUser, role);
+            return new User(userName, passwordUser, role, userId);
         } catch (SQLException e) {
             throw new UserDAOException("Problem with authorization", e);
         } catch (ConnectionPoolException e) {

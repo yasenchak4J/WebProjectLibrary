@@ -8,14 +8,16 @@ public class User implements Serializable {
     private String name;
     private String password;
     private int role;
+    private int userId;
 
     public User() {
     }
 
-    public User(String name, String password, int role) {
+    public User(String name, String password, int role, int userId) {
         this.name = name;
         this.password = password;
         this.role = role;
+        this.userId = userId;
     }
 
     public int getRole() {
@@ -40,6 +42,14 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     @Override
