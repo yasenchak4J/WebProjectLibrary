@@ -8,7 +8,11 @@ import by.yasenchak.library_epam.exception.dao_exception.UserDAOException;
 import by.yasenchak.library_epam.service.ClientService;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.List;
+
 public class ClientServiceImpl implements ClientService {
+    private static final String EMPTY_PASSWORD = "";
+
     @Override
     public User signIn(String login, String password) throws ServiceException {
         if(login == null || login.isEmpty() || password == null || password.isEmpty()){
@@ -19,7 +23,7 @@ public class ClientServiceImpl implements ClientService {
         try {
             User user = userDAO.signIn(login);
             if(BCrypt.checkpw(password, user.getPassword())) {
-                user.setPassword("");
+                user.setPassword(EMPTY_PASSWORD);
                 return user;
             } else {
                 return null;
@@ -49,6 +53,17 @@ public class ClientServiceImpl implements ClientService {
             }
         } catch (UserDAOException e) {
             throw new ServiceException("Problem with registration", e);
+        }
+    }
+
+    @Override
+    public List<User> getAllUsers() throws ServiceException {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        UserDAO userDAO = daoFactory.getUserDAO();
+        try {
+            return userDAO.getAllUsers();
+        } catch (UserDAOException e) {
+            throw new ServiceException("SQL problem", e);
         }
     }
 }

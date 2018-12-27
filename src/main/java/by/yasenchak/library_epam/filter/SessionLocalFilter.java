@@ -1,5 +1,7 @@
 package by.yasenchak.library_epam.filter;
 
+import by.yasenchak.library_epam.utils.RequestParameter;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +17,8 @@ public class SessionLocalFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
 
-        if (req.getParameter("sessionLocale") != null) {
-            req.getSession().setAttribute("lang", req.getParameter("sessionLocale"));
+        if (req.getParameter(RequestParameter.SESSION_LOCALE.getCode()) != null) {
+            req.getSession().setAttribute(RequestParameter.LANG.getCode(), req.getParameter(RequestParameter.SESSION_LOCALE.getCode()));
         }
         chain.doFilter(request, response);
     }

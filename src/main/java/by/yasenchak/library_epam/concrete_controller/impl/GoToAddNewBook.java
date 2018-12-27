@@ -5,9 +5,9 @@ import by.yasenchak.library_epam.utils.Page;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class GoToAuth implements Command {
+public class GoToAddNewBook implements Command {
     @Override
     public String execute(HttpServletRequest request) {
-        return Page.USER_AUTH.getCode();
+        return Page.ADD_NEW_BOOK.getCode();
     }
 }

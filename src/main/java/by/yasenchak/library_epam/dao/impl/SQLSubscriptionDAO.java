@@ -13,6 +13,7 @@ import java.sql.SQLException;
 
 public class SQLSubscriptionDAO implements SubscriptionDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+
     private static final String ADD_NEW_SUBSCRIPTION = "INSERT INTO subscriptions (id_book, id_user, type, active) VALUES (?,?,?,?);";
 
     @Override

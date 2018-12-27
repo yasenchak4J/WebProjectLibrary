@@ -2,7 +2,8 @@ package by.yasenchak.library_epam.controller;
 
 import by.yasenchak.library_epam.concrete_controller.Command;
 import by.yasenchak.library_epam.concrete_controller.CommandHelper;
-import by.yasenchak.library_epam.concrete_controller.EnumPages;
+import by.yasenchak.library_epam.utils.Page;
+import by.yasenchak.library_epam.utils.RequestParameter;
 
 
 import javax.servlet.RequestDispatcher;
@@ -18,18 +19,18 @@ public class Controller extends HttpServlet
 {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String commandName = req.getParameter("action");
+        String commandName = req.getParameter(RequestParameter.ACTION.getCode());
         if(commandName != null){
             executeCommand(req, resp, commandName);
         } else {
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher(EnumPages.MAIN_PAGE.getCode());
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher(Page.MAIN_PAGE.getCode());
             requestDispatcher.forward(req, resp);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String commandName = req.getParameter("action");
+        String commandName = req.getParameter(RequestParameter.ACTION.getCode());
         executeCommand(req, resp, commandName);
     }
 

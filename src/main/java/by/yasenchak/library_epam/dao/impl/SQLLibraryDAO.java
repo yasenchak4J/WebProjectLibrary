@@ -7,6 +7,7 @@ import by.yasenchak.library_epam.entity.Book;
 import by.yasenchak.library_epam.entity.Genre;
 import by.yasenchak.library_epam.exception.dao_exception.ConnectionPoolException;
 import by.yasenchak.library_epam.exception.dao_exception.LibraryDAOException;
+import by.yasenchak.library_epam.utils.DataBaseField;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 public class SQLLibraryDAO implements LibraryDAO {
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+
     private static final String ADD_NEW_BOOK = "INSERT INTO books (name, \"pageCount\", publisher, image, isbn) VALUES (?,?,?,?,?);";
     private static final String GET_ALL_BOOKS = "SELECT books.name, books.isbn, books.\"pageCount\", books.publisher, books.id_book, books.image,  genre.\"genreName\", genre.id_genre, author.id_author, author.\"authorName\", author.\"Surname\"" +
             " FROM books LEFT OUTER JOIN genre ON (books.id_genre = genre.id_genre) LEFT OUTER JOIN author ON (books.id_author = author.id_author)";
@@ -151,17 +153,17 @@ public class SQLLibraryDAO implements LibraryDAO {
         Genre genre = new Genre();
         Book book = new Book();
 
-        author.setName(result.getString("authorName"));
-        author.setSurname(result.getString("Surname"));
-        author.setId(result.getInt("id_author"));
-        genre.setId(result.getInt("id_genre"));
-        genre.setName(result.getString("genreName"));
-        book.setId(result.getInt("id_book"));
-        book.setName(result.getString("name"));
-        book.setiSBN(result.getString("isbn"));
-        book.setImagePath(result.getString("image"));
-        book.setPageCount(result.getInt("pageCount"));
-        book.setPublisher(result.getString("publisher"));
+        author.setName(result.getString(DataBaseField.AUTHOR_NAME.getCode()));
+        author.setSurname(result.getString(DataBaseField.SURNAME.getCode()));
+        author.setId(result.getInt(DataBaseField.ID_AUTHOR.getCode()));
+        genre.setId(result.getInt(DataBaseField.ID_GENRE.getCode()));
+        genre.setName(result.getString(DataBaseField.GENRE_NAME.getCode()));
+        book.setId(result.getInt(DataBaseField.ID_BOOK.getCode()));
+        book.setName(result.getString(DataBaseField.NAME.getCode()));
+        book.setiSBN(result.getString(DataBaseField.ISBN.getCode()));
+        book.setImagePath(result.getString(DataBaseField.IMAGE.getCode()));
+        book.setPageCount(result.getInt(DataBaseField.PAGE_COUNT.getCode()));
+        book.setPublisher(result.getString(DataBaseField.PUBLISHER.getCode()));
         book.setAuthors(author);
         book.setGenres(genre);
 

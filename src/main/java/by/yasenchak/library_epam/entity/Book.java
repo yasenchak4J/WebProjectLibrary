@@ -28,10 +28,6 @@ public class Book implements Serializable {
         this.imagePath = image;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
     public String getName() {
         return name;
     }

@@ -3,9 +3,10 @@ package by.yasenchak.library_epam.concrete_controller.impl;
 import by.yasenchak.library_epam.entity.Book;
 import by.yasenchak.library_epam.exception.ServiceException;
 import by.yasenchak.library_epam.concrete_controller.Command;
-import by.yasenchak.library_epam.concrete_controller.EnumPages;
+import by.yasenchak.library_epam.utils.Page;
 import by.yasenchak.library_epam.service.BookService;
 import by.yasenchak.library_epam.service.ServiceFactory;
+import by.yasenchak.library_epam.utils.RequestParameter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,27 +20,28 @@ import java.util.List;
 import java.util.UUID;
 
 public class EditBook implements Command {
+    private static final String IMAGE_PATH = "images";
     @Override
     public String execute(HttpServletRequest request) {
-        String response = null;
+        String response;
         Part part;
         try {
             Book book = new Book();
-            book.setId(Integer.parseInt(request.getParameter("id")));
-            book.setName(request.getParameter("name"));
-            book.setPublisher(request.getParameter("publisher"));
-            book.setPageCount(Integer.parseInt(request.getParameter("pageCount")));
-            book.setiSBN(request.getParameter("isbn"));
-            part = request.getPart("file");
+            book.setId(Integer.parseInt(request.getParameter(RequestParameter.ID.getCode())));
+            book.setName(request.getParameter(RequestParameter.NAME.getCode()));
+            book.setPublisher(request.getParameter(RequestParameter.PUBLISHER.getCode()));
+            book.setPageCount(Integer.parseInt(request.getParameter(RequestParameter.PAGE_COUNT.getCode())));
+            book.setiSBN(request.getParameter(RequestParameter.ISBN.getCode()));
+            part = request.getPart(RequestParameter.FILE.getCode());
 
             if(!part.getSubmittedFileName().isEmpty()){
                 String fileName = part.getSubmittedFileName();
                 String formatImage = fileName.substring(fileName.length()-4);
                 String uniqueName = UUID.randomUUID().toString();
-                String path = request.getServletContext().getRealPath("images") + "\\" + uniqueName + formatImage;
+                String path = request.getServletContext().getRealPath(IMAGE_PATH) + "\\" + uniqueName + formatImage;
                 InputStream stream = part.getInputStream();
                 Files.copy(stream, Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
-                path = "images/" + uniqueName + formatImage;
+                path = IMAGE_PATH + "/" + uniqueName + formatImage;
                 book.setImagePath(path);
             }
 
@@ -47,10 +49,10 @@ public class EditBook implements Command {
             BookService bookService = serviceFactory.getBookService();
             bookService.editBook(book);
             List<Book> books = bookService.getAllBooks();
-            request.setAttribute("books", books);
-            response = EnumPages.ADMIN_PAGE.getCode();
+            request.setAttribute(RequestParameter.BOOKS.getCode(), books);
+            response = Page.ADMIN_PAGE.getCode();
         } catch (IOException | ServiceException | ServletException e) {
-            response = EnumPages.ERROR_PAGE.getCode();
+            response = Page.ERROR_PAGE.getCode();
         }
         return response;
     }

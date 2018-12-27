@@ -94,5 +94,4 @@ public class Subscription implements Serializable {
         return Objects.hash(getId(), getBookId(), getDateIn(), getDateOut(), getUserId());
     }
 
-
 }

@@ -5,6 +5,7 @@ import by.yasenchak.library_epam.dao.connection_pool.ConnectionPool;
 import by.yasenchak.library_epam.entity.Genre;
 import by.yasenchak.library_epam.exception.dao_exception.ConnectionPoolException;
 import by.yasenchak.library_epam.exception.dao_exception.GenreDAOException;
+import by.yasenchak.library_epam.utils.DataBaseField;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,8 +16,9 @@ import java.util.List;
 
 public class SQLGenreDAO implements GenreDAO {
 
-    private static final String GET_ALL_GENRE = "SELECT * FROM genre";
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+    private static final String GET_ALL_GENRE = "SELECT * FROM genre";
 
     @Override
     public List<Genre> getAllGenre() throws GenreDAOException {
@@ -26,8 +28,8 @@ public class SQLGenreDAO implements GenreDAO {
 
             while(result.next()) {
                 Genre genre = new Genre();
-                genre.setId(result.getInt("id_genre"));
-                genre.setName(result.getString("genreName"));
+                genre.setId(result.getInt(DataBaseField.ID_GENRE.getCode()));
+                genre.setName(result.getString(DataBaseField.GENRE_NAME.getCode()));
                 genres.add(genre);
             }
         }  catch (ConnectionPoolException | SQLException e) {

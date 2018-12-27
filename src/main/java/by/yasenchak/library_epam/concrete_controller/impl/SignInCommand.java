@@ -4,41 +4,44 @@ import by.yasenchak.library_epam.entity.Book;
 import by.yasenchak.library_epam.entity.User;
 import by.yasenchak.library_epam.exception.ServiceException;
 import by.yasenchak.library_epam.concrete_controller.Command;
-import by.yasenchak.library_epam.concrete_controller.EnumPages;
+import by.yasenchak.library_epam.utils.Page;
 import by.yasenchak.library_epam.service.BookService;
 import by.yasenchak.library_epam.service.ClientService;
 import by.yasenchak.library_epam.service.ServiceFactory;
+import by.yasenchak.library_epam.utils.RequestParameter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class SignInCommand implements Command {
+    private static final String INCORRECT_LOGIN = "Incorrect login or password";
+
     @Override
     public String execute(HttpServletRequest request){
         String responsePage = null;
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
+        String login = request.getParameter(RequestParameter.LOGIN.getCode());
+        String password = request.getParameter(RequestParameter.PASSWORD.getCode());
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         BookService bookService = serviceFactory.getBookService();
         ClientService clientService = serviceFactory.getClientService();
         try {
             User user = clientService.signIn(login, password);
             if(user == null){
-                request.setAttribute("error", "Incorrect login or password");
-                responsePage = EnumPages.USER_AUTH.getCode();
+                request.setAttribute(RequestParameter.ERROR.getCode(), INCORRECT_LOGIN);
+                responsePage = Page.USER_AUTH.getCode();
             } else{
                 List<Book> books = bookService.getAllBooks();
-                request.setAttribute("books", books);
-                request.getSession().setAttribute("user", user);
+                request.setAttribute(RequestParameter.BOOKS.getCode(), books);
+                request.getSession().setAttribute(RequestParameter.USER.getCode(), user);
                 if(user.getRole() == 1){
-                    responsePage = EnumPages.MAIN_PAGE.getCode();
+                    responsePage = Page.MAIN_PAGE.getCode();
                 }else if(user.getRole() == 0){
-                    responsePage = EnumPages.ADMIN_PAGE.getCode();
+                    responsePage = Page.ADMIN_PAGE.getCode();
                 }
             }
         } catch (ServiceException e) {
             e.printStackTrace();
-            responsePage = EnumPages.AUTH_FAILS.getCode();
+            responsePage = Page.AUTH_FAILS.getCode();
         }
         return responsePage;
     }

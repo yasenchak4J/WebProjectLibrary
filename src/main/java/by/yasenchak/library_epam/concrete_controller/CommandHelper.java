@@ -25,6 +25,10 @@ public final class CommandHelper {
         commands.put("subscriptionBook", new SubscriptionBook());
         commands.put("goToAuthPage", new GoToAuth());
         commands.put("addToSubs", new AddNewSubscription());
+        commands.put("getAllBookAdmin", new GetAllBooksAdmin());
+        commands.put("searchAdmin", new SearchAdmin());
+        commands.put("toAddNewBook", new GoToAddNewBook());
+        commands.put("toAllUsers", new GoToAllUsers());
     }
 
     public static CommandHelper getInstance(){

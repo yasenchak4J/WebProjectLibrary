@@ -11,20 +11,19 @@ import by.yasenchak.library_epam.utils.RequestParameter;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class SignOut implements Command {
+public class GetAllBooksAdmin implements Command {
     @Override
     public String execute(HttpServletRequest request) {
-        String page;
-        request.getSession().removeAttribute(RequestParameter.USER.getCode());
+        String response;
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         BookService bookService = serviceFactory.getBookService();
         try {
-            List<Book> bookList =  bookService.getAllBooks();
-            request.setAttribute(RequestParameter.BOOKS.getCode(), bookList);
-            page = Page.MAIN_PAGE.getCode();
+            List<Book> books = bookService.getAllBooks();
+            request.setAttribute(RequestParameter.BOOKS.getCode(), books);
+            response = Page.ADMIN_PAGE.getCode();
         } catch (ServiceException e) {
-            page = Page.ERROR_PAGE.getCode();
+            response = Page.ERROR_PAGE.getCode();
         }
-        return page;
+        return response;
     }
 }

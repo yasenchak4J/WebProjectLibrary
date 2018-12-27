@@ -2,26 +2,22 @@ package by.yasenchak.library_epam.concrete_controller.impl;
 
 import by.yasenchak.library_epam.concrete_controller.Command;
 import by.yasenchak.library_epam.utils.Page;
-import by.yasenchak.library_epam.entity.Book;
 import by.yasenchak.library_epam.exception.ServiceException;
-import by.yasenchak.library_epam.service.BookService;
+import by.yasenchak.library_epam.service.ClientService;
 import by.yasenchak.library_epam.service.ServiceFactory;
 import by.yasenchak.library_epam.utils.RequestParameter;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
-public class SignOut implements Command {
+public class GoToAllUsers implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         String page;
-        request.getSession().removeAttribute(RequestParameter.USER.getCode());
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        BookService bookService = serviceFactory.getBookService();
+        ClientService clientService = serviceFactory.getClientService();
         try {
-            List<Book> bookList =  bookService.getAllBooks();
-            request.setAttribute(RequestParameter.BOOKS.getCode(), bookList);
-            page = Page.MAIN_PAGE.getCode();
+            request.setAttribute(RequestParameter.USERS.getCode(), clientService.getAllUsers());
+            page = Page.All_USERS.getCode();
         } catch (ServiceException e) {
             page = Page.ERROR_PAGE.getCode();
         }

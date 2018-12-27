@@ -5,6 +5,7 @@ import java.io.IOException;
 
 public class EncodingFilter implements Filter {
     private FilterConfig filterConfig = null;
+    private static final String UTF = "UTF-8";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -13,7 +14,7 @@ public class EncodingFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        servletRequest.setCharacterEncoding("UTF-8");
+        servletRequest.setCharacterEncoding(UTF);
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

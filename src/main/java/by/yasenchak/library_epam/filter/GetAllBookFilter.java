@@ -5,6 +5,7 @@ import by.yasenchak.library_epam.entity.Book;
 import by.yasenchak.library_epam.entity.Genre;
 import by.yasenchak.library_epam.exception.ServiceException;
 import by.yasenchak.library_epam.service.ServiceFactory;
+import by.yasenchak.library_epam.utils.RequestParameter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -21,13 +22,13 @@ public class GetAllBookFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (javax.servlet.http.HttpServletRequest) servletRequest;
         HttpSession session = req.getSession();
-        if(req.getParameter("action") == null){
+        if(req.getParameter(RequestParameter.ACTION.getCode()) == null){
             try {
                 List<Book> books = ServiceFactory.getInstance().getBookService().getAllBooks();
                 List<Genre> genres = ServiceFactory.getInstance().getGenreService().getAllGenre();
                 Collections.sort(genres);
-                session.setAttribute("genres", genres);
-                req.setAttribute("books", books);
+                session.setAttribute(RequestParameter.GENRES.getCode(), genres);
+                req.setAttribute(RequestParameter.BOOKS.getCode(), books);
             } catch (ServiceException e) {
                 e.printStackTrace();
             }

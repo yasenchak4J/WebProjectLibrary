@@ -32,6 +32,14 @@ public class Author implements Serializable {
         this.name = name;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,13 +64,5 @@ public class Author implements Serializable {
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 '}';
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }
