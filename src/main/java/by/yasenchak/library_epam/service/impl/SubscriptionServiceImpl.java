@@ -11,6 +11,8 @@ import by.yasenchak.library_epam.service.BookService;
 import by.yasenchak.library_epam.service.ServiceFactory;
 import by.yasenchak.library_epam.service.SubscriptionService;
 
+import java.util.List;
+
 public class SubscriptionServiceImpl implements SubscriptionService {
     @Override
     public Book subscriptionBook(User user, int bookId) throws ServiceException {
@@ -35,6 +37,41 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         } catch (SubscriptionDAOException e) {
             e.printStackTrace();
             throw new ServiceException("Problem with sql", e);
+        }
+    }
+
+    @Override
+    public List<Subscription> getUnconfirmedSubs() throws ServiceException {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        SubscriptionDAO subscriptionDAO = daoFactory.getSubscriptionDAO();
+        try {
+            return subscriptionDAO.getAllUnconfirmedSubscriptions();
+        } catch (SubscriptionDAOException e) {
+            throw new ServiceException("Problem with SQL", e);
+        }
+    }
+
+    @Override
+    public Subscription getSubscriptionById(int idSubs) throws ServiceException {
+        if(idSubs < 0){
+            throw new ServiceException("Incorrect id");
+        }
+        try {
+            return DAOFactory.getInstance().getSubscriptionDAO().getSubscriptionById(idSubs);
+        } catch (SubscriptionDAOException e) {
+            throw new ServiceException("Problem with SQL", e);
+        }
+    }
+
+    @Override
+    public void confirmSubscription(Subscription subscription) throws ServiceException {
+        if(subscription == null){
+            throw new ServiceException("Incorrect subs");
+        }
+        try {
+            DAOFactory.getInstance().getSubscriptionDAO().confirmSubscription(subscription);
+        } catch (SubscriptionDAOException e) {
+            throw new ServiceException("Problem with SQL", e);
         }
     }
 }

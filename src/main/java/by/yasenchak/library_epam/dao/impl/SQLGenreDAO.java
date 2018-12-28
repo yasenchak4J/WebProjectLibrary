@@ -25,7 +25,6 @@ public class SQLGenreDAO implements GenreDAO {
         List<Genre> genres = new ArrayList<>();
         try(Connection conn = connectionPool.takeConnection(); Statement statement = conn.createStatement();
             ResultSet result = statement.executeQuery(GET_ALL_GENRE)) {
-
             while(result.next()) {
                 Genre genre = new Genre();
                 genre.setId(result.getInt(DataBaseField.ID_GENRE.getCode()));

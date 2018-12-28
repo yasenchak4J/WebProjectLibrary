@@ -10,6 +10,9 @@ public enum Page {
     USER_PAGE("/WEB-INF/UserPage.jsp"),
     ADD_NEW_BOOK("/WEB-INF/AdminAddNewBook.jsp"),
     All_USERS("/WEB-INF/AdminAllUsers.jsp"),
+    LIBRARIAN_PAGE("/WEB-INF/LibrarianPage.jsp"),
+    LIBRARIAN_BOOK("/WEB-INF/LibrarianBook.jsp"),
+    CONCRETE_SUBS("/WEB-INF/LibrarianConcreteSubs.jsp"),
     SUBS_PAGE("/WEB-INF/Subscription.jsp");
 
     private String code;

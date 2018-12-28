@@ -66,4 +66,32 @@ public class ClientServiceImpl implements ClientService {
             throw new ServiceException("SQL problem", e);
         }
     }
+
+    @Override
+    public void deleteUser(int userId) throws ServiceException {
+        if(userId < 0){
+            throw new ServiceException("Incorrect user");
+        }
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        UserDAO userDAO = daoFactory.getUserDAO();
+        try {
+            userDAO.deleteUser(userId);
+        } catch (UserDAOException e) {
+            throw new ServiceException("Problem with SQL", e);
+        }
+    }
+
+    @Override
+    public void updateUserRole(int userId, int newRole) throws ServiceException {
+        if(userId < 0 && newRole < 0){
+            throw new ServiceException("Incorrect user or role");
+        }
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        UserDAO userDAO = daoFactory.getUserDAO();
+        try {
+            userDAO.updateUserRole(userId, newRole);
+        } catch (UserDAOException e) {
+            throw new ServiceException("Problem with SQL", e);
+        }
+    }
 }

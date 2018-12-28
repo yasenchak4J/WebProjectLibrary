@@ -10,7 +10,11 @@ public enum RequestParameter {
     BOOK("book"),
     TYPE("type"),
     USER("user"),
+    DATE_IN("dateIn"),
+    DATE_OUT("dateOut"),
     USERS("users"),
+    NEW_ROLE("newRole"),
+    UNC_SUBS("unconfirmedSubs"),
     ID("id"),
     FILE("file"),
     LANG("lang"),
@@ -20,6 +24,7 @@ public enum RequestParameter {
     PASSWORD("password"),
     REGISTRATION("registration"),
     TEXT_SEARCH("textSearch"),
+    SUBS("subs"),
     SESSION_LOCALE("sessionLocale"),
     ERROR("error");
 

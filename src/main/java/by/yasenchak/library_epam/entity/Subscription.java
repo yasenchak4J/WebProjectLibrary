@@ -7,16 +7,23 @@ public class Subscription implements Serializable {
 
     private static final long serialVersionUID = -4598533164524362668L;
     private int id;
+    private String bookName;
     private int bookId;
+    private int userId;
     private String dateIn;
     private String dateOut;
-    private int userId;
+    private String userName;
     private String type;
+    private String isbn;
     private boolean active;
 
-    public Subscription(int bookId, int userId, String type, boolean active){
-        this.bookId = bookId;
-        this.userId = userId;
+    public Subscription(){
+
+    }
+
+    public Subscription(int bookName, int userName, String type, boolean active){
+        this.bookId = bookName;
+        this.userId = userName;
         this.type = type;
         this.active = active;
     }
@@ -29,12 +36,12 @@ public class Subscription implements Serializable {
         this.id = id;
     }
 
-    public int getBookId() {
-        return bookId;
+    public String getBookName() {
+        return bookName;
     }
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
     }
 
     public String getDateIn() {
@@ -53,12 +60,12 @@ public class Subscription implements Serializable {
         this.dateOut = dateOut;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getType() {
@@ -77,21 +84,45 @@ public class Subscription implements Serializable {
         this.active = active;
     }
 
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Subscription that = (Subscription) o;
         return getId() == that.getId() &&
-                getBookId() == that.getBookId() &&
-                getUserId() == that.getUserId() &&
+                getBookName().equals(that.getBookName()) &&
+                getUserName().equals(that.getUserName()) &&
                 Objects.equals(getDateIn(), that.getDateIn()) &&
                 Objects.equals(getDateOut(), that.getDateOut());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getBookId(), getDateIn(), getDateOut(), getUserId());
+        return Objects.hash(getId(), getBookName(), getDateIn(), getDateOut(), getUserName());
     }
 
 }

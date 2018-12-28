@@ -52,23 +52,71 @@
     </thead>
     <tbody>
     <c:forEach var="user" items="${users}">
-        <tr>
-            <td>${user.getUserId()}</td>
-            <td>${user.getName()}</td>
-            <td>${user.getRole()}</td>
-            <td>
-                <div class="btn-group dropright">
-                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Action
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="#">Change role to librarian</a>
-                        <a class="dropdown-item" href="#">Change role to user</a>
-                        <a class="dropdown-item" href="#">Delete user</a>
+        <c:if test="${user.getRole() == 0}">
+            <tr>
+                <td>${user.getUserId()}</td>
+                <td>${user.getName()}</td>
+                <td>${user.getRole()}</td>
+                <td></td>
+            </tr>
+        </c:if>
+        <c:if test="${user.getRole() == 1}">
+
+            <tr>
+                <td>${user.getUserId()}</td>
+                <td>${user.getName()}</td>
+                <td>${user.getRole()}</td>
+                <td>
+                    <div class="btn-group dropright">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <form action="index" method="post" id="changeRoleToLibrarian ${user.getUserId()}">
+                                <input type="hidden" name="action" value="changeRole">
+                                <input type="hidden" name="newRole" value="2">
+                                <input type="hidden" name="id" value="${user.getUserId()}">
+                                <a class="dropdown-item" href="#" onclick="document.getElementById('changeRoleToLibrarian ${user.getUserId()}').submit(); return false;">Change role to librarian</a>
+                            </form>
+                            <form action="index" method="post" id="deleteUserRoleUser ${user.getUserId()}">
+                                <input type="hidden" name="action" value="deleteUser">
+                                <input type="hidden" name="id" value="${user.getUserId()}">
+                                <a class="dropdown-item" href="#" onclick="document.getElementById('deleteUserRoleUser ${user.getUserId()}').submit(); return false;">Delete user</a>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </td>
-        </tr>
+                </td>
+            </tr>
+        </c:if>
+
+        <c:if test="${user.getRole() == 2}">
+
+            <tr>
+                <td>${user.getUserId()}</td>
+                <td>${user.getName()}</td>
+                <td>${user.getRole()}</td>
+                <td>
+                    <div class="btn-group dropright">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <form action="index" method="post" id="changeRoleToUser ${user.getUserId()}">
+                                <input type="hidden" name="action" value="changeRole">
+                                <input type="hidden" name="newRole" value="1">
+                                <input type="hidden" name="id" value="${user.getUserId()}">
+                                <a class="dropdown-item" href="#" onclick="document.getElementById('changeRoleToUser ${user.getUserId()}').submit(); return false;">Change role to user</a>
+                            </form>
+                            <form action="index" method="post" id="deleteUser ${user.getUserId()}">
+                                <input type="hidden" name="action" value="deleteUser">
+                                <input type="hidden" name="id" value="${user.getUserId()}">
+                                <a class="dropdown-item" href="#" onclick="document.getElementById('deleteUser ${user.getUserId()}').submit(); return false;">Delete user</a>
+                            </form>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </c:if>
     </c:forEach>
     </tbody>
 </table>

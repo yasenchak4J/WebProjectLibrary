@@ -29,6 +29,11 @@ public final class CommandHelper {
         commands.put("searchAdmin", new SearchAdmin());
         commands.put("toAddNewBook", new GoToAddNewBook());
         commands.put("toAllUsers", new GoToAllUsers());
+        commands.put("changeRole", new ChangeUserRole());
+        commands.put("deleteUser", new DeleteUser());
+        commands.put("whatIsTheBook", new WhatIsTheBookLibrarian());
+        commands.put("goToConfirmSubs", new GoToConfirmSubs());
+        commands.put("confirmSubs", new ConfirmSubscription());
     }
 
     public static CommandHelper getInstance(){

@@ -30,17 +30,21 @@ public class SignInCommand implements Command {
                 request.setAttribute(RequestParameter.ERROR.getCode(), INCORRECT_LOGIN);
                 responsePage = Page.USER_AUTH.getCode();
             } else{
-                List<Book> books = bookService.getAllBooks();
-                request.setAttribute(RequestParameter.BOOKS.getCode(), books);
                 request.getSession().setAttribute(RequestParameter.USER.getCode(), user);
                 if(user.getRole() == 1){
+                    List<Book> books = bookService.getAllBooks();
+                    request.setAttribute(RequestParameter.BOOKS.getCode(), books);
                     responsePage = Page.MAIN_PAGE.getCode();
                 }else if(user.getRole() == 0){
+                    List<Book> books = bookService.getAllBooks();
+                    request.setAttribute(RequestParameter.BOOKS.getCode(), books);
                     responsePage = Page.ADMIN_PAGE.getCode();
+                } else if (user.getRole() == 2){
+                    request.setAttribute(RequestParameter.UNC_SUBS.getCode(), serviceFactory.getSubscriptionService().getUnconfirmedSubs());
+                    responsePage = Page.LIBRARIAN_PAGE.getCode();
                 }
             }
         } catch (ServiceException e) {
-            e.printStackTrace();
             responsePage = Page.AUTH_FAILS.getCode();
         }
         return responsePage;

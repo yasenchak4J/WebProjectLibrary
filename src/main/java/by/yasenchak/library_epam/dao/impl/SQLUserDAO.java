@@ -20,6 +20,8 @@ public class SQLUserDAO implements UserDAO {
     private static final String REGISTRATION = "INSERT INTO users(\"userName\", \"password\", \"role\") VALUES(? , ?, ?);";
     private static final String SEARCH_USER_BY_LOGIN = "SELECT \"userName\" FROM users WHERE \"userName\" = ? ;";
     private static final String GET_ALL_USERS = "SELECT * FROM users;";
+    private static final String DELETE_USER = "DELETE FROM users WHERE \"idUsers\" = ?";
+    private static final String UPDATE_USER_ROLE = "UPDATE users SET \"role\" = ? WHERE \"idUsers\" = ?";
 
     public SQLUserDAO(){
 
@@ -97,6 +99,29 @@ public class SQLUserDAO implements UserDAO {
             return users;
         } catch (SQLException | ConnectionPoolException e) {
             throw new UserDAOException("Problem with getAllUsers", e);
+        }
+    }
+
+    @Override
+    public void deleteUser(int userId) throws UserDAOException {
+        try (Connection conn = connectionPool.takeConnection();
+        PreparedStatement preparedStatement = conn.prepareStatement(DELETE_USER)){
+            preparedStatement.setInt(1, userId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new UserDAOException("Problem with deleteUser", e);
+        }
+    }
+
+    @Override
+    public void updateUserRole(int userId, int newRole) throws UserDAOException {
+        try (Connection conn = connectionPool.takeConnection();
+        PreparedStatement preparedStatement = conn.prepareStatement(UPDATE_USER_ROLE)) {
+            preparedStatement.setInt(1, newRole);
+            preparedStatement.setInt(2, userId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new UserDAOException("Problem with updateUserRole", e);
         }
     }
 }

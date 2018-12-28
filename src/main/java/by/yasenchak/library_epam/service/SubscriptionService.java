@@ -5,7 +5,12 @@ import by.yasenchak.library_epam.entity.Subscription;
 import by.yasenchak.library_epam.entity.User;
 import by.yasenchak.library_epam.exception.ServiceException;
 
+import java.util.List;
+
 public interface SubscriptionService {
     Book subscriptionBook(User user, int bookId) throws ServiceException;
     void addNewSubscription(Subscription subscription) throws ServiceException;
+    List<Subscription> getUnconfirmedSubs() throws ServiceException;
+    Subscription getSubscriptionById(int idSubs) throws ServiceException;
+    void confirmSubscription(Subscription subscription) throws ServiceException;
 }
