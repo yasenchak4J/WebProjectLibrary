@@ -1,6 +1,10 @@
 package by.yasenchak.library_epam.entity;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class Subscription implements Serializable {
@@ -106,6 +110,21 @@ public class Subscription implements Serializable {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public boolean equalsDate(){
+        try {
+            Date date = new SimpleDateFormat("yyyy-mm-dd").parse(dateOut);
+            Calendar calendar = Calendar.getInstance();
+            Date currentDate = new Date(calendar.getTime().getTime());
+            if(date.before(currentDate)){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (ParseException e) {
+            return true;
+        }
     }
 
     @Override

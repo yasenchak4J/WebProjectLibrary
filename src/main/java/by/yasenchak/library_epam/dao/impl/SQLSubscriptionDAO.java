@@ -1,6 +1,5 @@
 package by.yasenchak.library_epam.dao.impl;
 
-import by.yasenchak.library_epam.concrete_controller.Command;
 import by.yasenchak.library_epam.dao.SubscriptionDAO;
 import by.yasenchak.library_epam.dao.connection_pool.ConnectionPool;
 import by.yasenchak.library_epam.entity.Subscription;
@@ -10,6 +9,7 @@ import by.yasenchak.library_epam.utils.DataBaseField;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -17,11 +17,16 @@ public class SQLSubscriptionDAO implements SubscriptionDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     private static final String ADD_NEW_SUBSCRIPTION = "INSERT INTO subscriptions (id_book, id_user, type, active) VALUES (?,?,?,?);";
-    private static final String GET_UNCONFIRMED_SUBS = "SELECT s.type, s.id_subs, s.id_book, s.id_user, s.active, u.\"userName\", b.name, b.isbn FROM subscriptions s " +
+    private static final String GET_UNCONFIRMED_SUBS = "SELECT s.\"dateIn\", s.\"dateOut\", s.type, s.id_subs, s.id_book, s.id_user, s.active, u.\"userName\", b.name, b.isbn FROM subscriptions s " +
             "LEFT JOIN users u ON (s.id_user = u.\"idUsers\") LEFT JOIN books b ON (s.id_book = b.id_book) WHERE s.active = false";
-    private static final String GET_SUBS_BY_ID = "SELECT s.type, s.id_subs, s.id_book, s.id_user, s.active, u.\"userName\", b.name, b.isbn FROM subscriptions s " +
+    private static final String GET_SUBS_BY_ID = "SELECT s.type, s.id_subs, s.id_book, s.id_user, s.active, u.\"userName\", b.name, s.\"dateIn\", s.\"dateOut\", b.isbn FROM subscriptions s " +
             "LEFT JOIN users u ON (s.id_user = u.\"idUsers\") LEFT JOIN books b ON (s.id_book = b.id_book) WHERE s.id_subs = ?";
-    private static final String CONFIRM_SUBS = "UPDATE subscriptions SET active = true, \"dateIn\" = ?, \"dateOut\" = ? WHERE id_subs = ?";
+    private static final String CONFIRM_SUBS = "UPDATE subscriptions SET active = true, \"dateIn\" = ?, \"dateOut\" = ?, done = false WHERE id_subs = ?";
+    private static final String GET_CURRENT_SUBS = "SELECT s.\"dateIn\", s.\"dateOut\", s.type, s.id_subs, s.id_book, s.id_user, s.active, u.\"userName\", b.name, b.isbn FROM subscriptions s " +
+            "LEFT JOIN users u ON (s.id_user = u.\"idUsers\") LEFT JOIN books b ON (s.id_book = b.id_book) WHERE s.active = true and s.done = false";
+    private static final String GET_CURRENT_USER_SUBS = "SELECT s.\"dateIn\", s.\"dateOut\", s.type, s.id_subs, s.id_book, s.id_user, s.active, u.\"userName\", b.name, b.isbn FROM subscriptions s " +
+            "LEFT JOIN users u ON (s.id_user = u.\"idUsers\") LEFT JOIN books b ON (s.id_book = b.id_book) WHERE s.active = true and s.done = false and s.id_user = ?";
+    private static final String CONFIRM_RETURN_BOOK = "UPDATE subscriptions SET \"dateOut\" = ?, done = true WHERE id_subs = ?";
 
     @Override
     public void addNewSubscription(Subscription subscription) throws SubscriptionDAOException {
@@ -39,16 +44,7 @@ public class SQLSubscriptionDAO implements SubscriptionDAO {
 
     @Override
     public List<Subscription> getAllUnconfirmedSubscriptions() throws SubscriptionDAOException {
-        try (Connection conn = connectionPool.takeConnection();
-             Statement statement = conn.createStatement(); ResultSet resultSet = statement.executeQuery(GET_UNCONFIRMED_SUBS)) {
-            List<Subscription> subscriptions = new ArrayList<>();
-            while (resultSet.next()){
-                subscriptions.add(createSubs(resultSet));
-            }
-            return subscriptions;
-        } catch (SQLException | ConnectionPoolException e) {
-            throw new SubscriptionDAOException("Problem with getAllUncSubs", e);
-        }
+        return getSubs(GET_UNCONFIRMED_SUBS);
     }
 
     @Override
@@ -74,8 +70,56 @@ public class SQLSubscriptionDAO implements SubscriptionDAO {
             statement.setInt(3, subscription.getId());
             statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
-            e.printStackTrace();
             throw new SubscriptionDAOException("Problem with confirmSubscription", e);
+        }
+    }
+
+    @Override
+    public List<Subscription> getCurrentSubscription() throws SubscriptionDAOException {
+        return getSubs(GET_CURRENT_SUBS);
+    }
+
+    @Override
+    public void confirmReturnBook(int idSubs) throws SubscriptionDAOException {
+        try(Connection connection = connectionPool.takeConnection();
+            PreparedStatement statement = connection.prepareStatement(CONFIRM_RETURN_BOOK)) {
+            Calendar calendar = Calendar.getInstance();
+            Date currentDate = new Date(calendar.getTime().getTime());
+            statement.setDate(1, currentDate);
+            statement.setInt(2, idSubs);
+            statement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            e.printStackTrace();
+            throw new SubscriptionDAOException("Problem with confirmReturnBook", e);
+        }
+    }
+
+    @Override
+    public List<Subscription> getCurrentUserSubs(int idUser) throws SubscriptionDAOException {
+        try (Connection conn = connectionPool.takeConnection();
+             PreparedStatement statement = conn.prepareStatement(GET_CURRENT_USER_SUBS)) {
+            List<Subscription> subscriptions = new ArrayList<>();
+            statement.setInt(1, idUser);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                subscriptions.add(createSubs(resultSet));
+            }
+            return subscriptions;
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new SubscriptionDAOException("Problem with getCurrentUserSubs", e);
+        }
+    }
+
+    private List<Subscription> getSubs(String query) throws SubscriptionDAOException{
+        try (Connection conn = connectionPool.takeConnection();
+             Statement statement = conn.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
+            List<Subscription> subscriptions = new ArrayList<>();
+            while (resultSet.next()){
+                subscriptions.add(createSubs(resultSet));
+            }
+            return subscriptions;
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new SubscriptionDAOException("Problem with getSubs", e);
         }
     }
 
@@ -89,6 +133,12 @@ public class SQLSubscriptionDAO implements SubscriptionDAO {
         subscription.setBookName(resultSet.getString(DataBaseField.NAME.getCode()));
         subscription.setUserName(resultSet.getString(DataBaseField.USER_NAME.getCode()));
         subscription.setIsbn(resultSet.getString(DataBaseField.ISBN.getCode()));
+        if(resultSet.getDate(DataBaseField.DATE_IN.getCode()) != null){
+            subscription.setDateIn(resultSet.getDate(DataBaseField.DATE_IN.getCode()).toString());
+        }
+        if(resultSet.getDate(DataBaseField.DATE_OUT.getCode()) != null){
+            subscription.setDateOut(resultSet.getDate(DataBaseField.DATE_OUT.getCode()).toString());
+        }
         return subscription;
     }
 }

@@ -11,4 +11,7 @@ public interface SubscriptionDAO {
     List<Subscription> getAllUnconfirmedSubscriptions() throws SubscriptionDAOException;
     Subscription getSubscriptionById(int idSubs) throws SubscriptionDAOException;
     void confirmSubscription(Subscription subscription) throws SubscriptionDAOException;
+    List<Subscription> getCurrentSubscription() throws  SubscriptionDAOException;
+    void confirmReturnBook(int idSubs) throws SubscriptionDAOException;
+    List<Subscription> getCurrentUserSubs(int idUser) throws SubscriptionDAOException;
 }

@@ -8,15 +8,13 @@ import by.yasenchak.library_epam.utils.RequestParameter;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class GoToConfirmSubs implements Command {
+public class GoToAllUnconfirmedSubs implements Command {
     @Override
     public String execute(HttpServletRequest request) {
-        int idSubs = Integer.parseInt(request.getParameter(RequestParameter.ID.getCode()));
         try {
-            request.setAttribute(RequestParameter.SUBS.getCode(), ServiceFactory.getInstance().getSubscriptionService().getSubscriptionById(idSubs));
-            return Page.CONCRETE_SUBS.getCode();
+            request.setAttribute(RequestParameter.UNC_SUBS.getCode(), ServiceFactory.getInstance().getSubscriptionService().getUnconfirmedSubs());
+            return Page.LIBRARIAN_PAGE.getCode();
         } catch (ServiceException e) {
-            e.printStackTrace();
             return Page.ERROR_PAGE.getCode();
         }
     }

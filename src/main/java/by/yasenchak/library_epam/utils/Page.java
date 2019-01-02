@@ -12,6 +12,7 @@ public enum Page {
     All_USERS("/WEB-INF/AdminAllUsers.jsp"),
     LIBRARIAN_PAGE("/WEB-INF/LibrarianPage.jsp"),
     LIBRARIAN_BOOK("/WEB-INF/LibrarianBook.jsp"),
+    CURRENT_SUBS("/WEB-INF/LibrarianCurrentSubs.jsp"),
     CONCRETE_SUBS("/WEB-INF/LibrarianConcreteSubs.jsp"),
     SUBS_PAGE("/WEB-INF/Subscription.jsp");
 

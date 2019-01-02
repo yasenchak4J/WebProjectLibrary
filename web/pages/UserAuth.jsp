@@ -15,38 +15,84 @@
 <div class="container-fluid h-100">
     <div class="row align-items-center justify-content-center h-100">
         <div class="col-md-auto">
-            <form action="index" method = "post">
-                <h1><fmt:message key="label.signin"/> </h1>
+            <h1><fmt:message key="label.signin"/> </h1>
+            <form action="index" method="post">
                 <input type="hidden" name="action" value="signin">
-                <input type="text" name="login" placeholder="Логин">
-                <p>
-                    <input type="password" name='password' placeholder="Пароль">
-                </p>
-
-                <p>
-                    <input type="submit" name="submit" value="Продолжить">
-                </p>
+                <div class="form-group row">
+                    <label for="inputlogin" class="col-sm-2 col-form-label">Login</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="login" id="inputlogin" placeholder="Login">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputPassword1" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="inputPassword1" name="password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">Sign In</button>
+                    </div>
+                </div>
             </form>
         </div>
-        <div class="col-md-auto">
-            <form  action="index" method = "post">
-                <h1><fmt:message key="label.registration"/></h1>
-                <input type="hidden" name="action" value="registration">
-                <input type="text" name="login" placeholder="Логин">
-                <p>
-                    <input type="password" name='password' placeholder="Пароль">
-                </p>
 
-                <p>
-                    <input type="submit" name="submit" value="Продолжить">
-                </p>
+        <div class="col-md-auto">
+            <h1><fmt:message key="label.registration"/> </h1>
+            <form action="index" method="post">
+                <input type="hidden" name="action" value="registration">
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Login</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="login" id="inputEmail3" placeholder="Login">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="inputPassword3" name="password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="firstName" class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="firstName" id="firstName" placeholder="Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="lastName" class="col-sm-2 col-form-label">Surname</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Surname">
+                    </div>
+                </div>
+                <fieldset class="form-group">
+                    <div class="row">
+                        <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
+                        <div class="col-sm-10">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="male" checked>
+                                <label class="form-check-label" for="gridRadios1">
+                                    Male
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="female">
+                                <label class="form-check-label" for="gridRadios2">
+                                    Female
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">Registration</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
 </div>
-
-
-
-
 </body>
 </html>

@@ -8,15 +8,15 @@ import by.yasenchak.library_epam.utils.RequestParameter;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class GoToConfirmSubs implements Command {
+public class ConfirmReturnBook implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         int idSubs = Integer.parseInt(request.getParameter(RequestParameter.ID.getCode()));
         try {
-            request.setAttribute(RequestParameter.SUBS.getCode(), ServiceFactory.getInstance().getSubscriptionService().getSubscriptionById(idSubs));
-            return Page.CONCRETE_SUBS.getCode();
+            ServiceFactory.getInstance().getSubscriptionService().confirmReturnBook(idSubs);
+            request.setAttribute(RequestParameter.CURRENT_SUBS.getCode(), ServiceFactory.getInstance().getSubscriptionService().getCurrentSubs());
+            return Page.CURRENT_SUBS.getCode();
         } catch (ServiceException e) {
-            e.printStackTrace();
             return Page.ERROR_PAGE.getCode();
         }
     }

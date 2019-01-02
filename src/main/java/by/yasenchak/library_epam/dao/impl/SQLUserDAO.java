@@ -16,8 +16,8 @@ public class SQLUserDAO implements UserDAO {
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
-    private static final String SIGN_IN = "SELECT \"userName\", \"password\", \"role\", \"idUsers\" FROM users WHERE \"userName\" = ? ;";
-    private static final String REGISTRATION = "INSERT INTO users(\"userName\", \"password\", \"role\") VALUES(? , ?, ?);";
+    private static final String SIGN_IN = "SELECT * FROM users WHERE \"userName\" = ? ;";
+    private static final String REGISTRATION = "INSERT INTO users(\"userName\", \"password\", \"role\", \"userGender\", \"userFirstName\", \"userSurname\") VALUES(? , ?, ?, ?, ?, ?);";
     private static final String SEARCH_USER_BY_LOGIN = "SELECT \"userName\" FROM users WHERE \"userName\" = ? ;";
     private static final String GET_ALL_USERS = "SELECT * FROM users;";
     private static final String DELETE_USER = "DELETE FROM users WHERE \"idUsers\" = ?";
@@ -29,11 +29,10 @@ public class SQLUserDAO implements UserDAO {
 
     @Override
     public User signIn(String login) throws UserDAOException {
-        String passwordUser = "", userName = "";
+        String passwordUser = "", userName = "", gender ="", firstName="", lastName="";
         int role = 0, userId = -1;
         try(Connection conn = connectionPool.takeConnection();
             PreparedStatement statement = conn.prepareStatement(SIGN_IN)) {
-
             statement.setString(1, login);
             ResultSet result = statement.executeQuery();
             if(result.next()) {
@@ -41,8 +40,11 @@ public class SQLUserDAO implements UserDAO {
                 passwordUser = result.getString(DataBaseField.PASSWORD.getCode());
                 role = result.getInt(DataBaseField.ROLE.getCode());
                 userId = result.getInt(DataBaseField.ID_USERS.getCode());
+                lastName = result.getString(DataBaseField.USER_LASTNAME.getCode());
+                firstName = result.getString(DataBaseField.USER_FIRSTNAME.getCode());
+                gender = result.getString(DataBaseField.USER_GENDER.getCode());
             }
-            return new User(userName, passwordUser, role, userId);
+            return new User(userName, passwordUser, role, userId, gender, firstName, lastName);
         } catch (SQLException e) {
             throw new UserDAOException("Problem with authorization", e);
         } catch (ConnectionPoolException e) {
@@ -55,10 +57,12 @@ public class SQLUserDAO implements UserDAO {
     {
         try(Connection conn = connectionPool.takeConnection();
             PreparedStatement statement = conn.prepareStatement(REGISTRATION)) {
-
             statement.setString(1, user.getName());
             statement.setString(2, user.getPassword());
             statement.setInt(3, user.getRole());
+            statement.setString(4, user.getGender());
+            statement.setString(5, user.getFirstName());
+            statement.setString(6, user.getLastName());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new UserDAOException("Problem with Registration", e);
@@ -71,7 +75,6 @@ public class SQLUserDAO implements UserDAO {
     public boolean userExist(User user) throws UserDAOException {
         try(Connection conn = connectionPool.takeConnection();
             PreparedStatement statement = conn.prepareStatement(SEARCH_USER_BY_LOGIN)){
-
             boolean userNotExist;
             statement.setString(1, user.getName());
             ResultSet result = statement.executeQuery();
@@ -94,6 +97,9 @@ public class SQLUserDAO implements UserDAO {
                 user.setUserId(resultSet.getInt(DataBaseField.ID_USERS.getCode()));
                 user.setName(resultSet.getString(DataBaseField.USER_NAME.getCode()));
                 user.setRole(resultSet.getInt(DataBaseField.ROLE.getCode()));
+                user.setFirstName(resultSet.getString(DataBaseField.USER_FIRSTNAME.getCode()));
+                user.setLastName(resultSet.getString(DataBaseField.USER_LASTNAME.getCode()));
+                user.setGender(resultSet.getString(DataBaseField.USER_GENDER.getCode()));
                 users.add(user);
             }
             return users;

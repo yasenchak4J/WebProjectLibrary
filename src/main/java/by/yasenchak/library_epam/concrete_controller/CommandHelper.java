@@ -34,6 +34,9 @@ public final class CommandHelper {
         commands.put("whatIsTheBook", new WhatIsTheBookLibrarian());
         commands.put("goToConfirmSubs", new GoToConfirmSubs());
         commands.put("confirmSubs", new ConfirmSubscription());
+        commands.put("goToAllUncSubs", new GoToAllUnconfirmedSubs());
+        commands.put("goToCurrentSubs", new GoToCurrentSubs());
+        commands.put("agreeReturn", new ConfirmReturnBook());
     }
 
     public static CommandHelper getInstance(){

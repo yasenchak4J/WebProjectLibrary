@@ -19,10 +19,10 @@ public class RegistrationCommand implements Command {
         String responsePage;
         String login = request.getParameter(RequestParameter.LOGIN.getCode());
         String password = request.getParameter(RequestParameter.PASSWORD.getCode());
-        User user = new User();
-        user.setName(login);
-        user.setPassword(password);
-        user.setRole(1);
+        String gender = request.getParameter(RequestParameter.GENDER.getCode());
+        String firstName = request.getParameter(RequestParameter.FIRSTNAME.getCode());
+        String lastName = request.getParameter(RequestParameter.LASTNAME.getCode());
+        User user = new User(login, password, 1, gender, firstName, lastName);
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         ClientService clientService = serviceFactory.getClientService();
         try {
