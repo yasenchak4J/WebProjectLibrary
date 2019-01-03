@@ -14,6 +14,7 @@ public enum RequestParameter {
     DATE_OUT("dateOut"),
     CURRENT_SUBS("currentSubs"),
     CURRENT_USER_SUBS("currentUserSubs"),
+    RENEW_SUBS("renewSubs"),
     USERS("users"),
     NEW_ROLE("newRole"),
     UNC_SUBS("unconfirmedSubs"),

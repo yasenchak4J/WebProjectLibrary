@@ -101,4 +101,22 @@ public class SubscriptionServiceImpl implements SubscriptionService {
             throw new ServiceException("Problem with SQL", e);
         }
     }
+
+    @Override
+    public void renewSubscription(int idSubs) throws ServiceException {
+        try {
+            DAOFactory.getInstance().getSubscriptionDAO().renewSubscription(idSubs);
+        } catch (SubscriptionDAOException e) {
+            throw new ServiceException("Problems with SQL", e);
+        }
+    }
+
+    @Override
+    public List<Subscription> getRenewSubs() throws ServiceException {
+        try {
+            return DAOFactory.getInstance().getSubscriptionDAO().getAllRenewSubscription();
+        } catch (SubscriptionDAOException e) {
+            throw new ServiceException("Problem with SQL", e);
+        }
+    }
 }

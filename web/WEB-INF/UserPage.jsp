@@ -20,18 +20,6 @@
                     <a class="nav-link" href="#" onclick="document.getElementById('goToProfile').submit(); return false;">My profile <span class="sr-only">(current)</span></a>
                 </form>
             </li>
-            <li>
-                <form action="index" method="post" id="goToCurrentSubs">
-                    <input type="hidden" name="action" value="goToCurrentSubs">
-                    <a class="nav-link" href="#" onclick="document.getElementById('goToCurrentSubs').submit(); return false;">Current subscription</a>
-                </form>
-            </li>
-            <li>
-                <form action="index" method="post" id="toAllUsers">
-                    <input type="hidden" name="action" value="toAllUsers">
-                    <a class="nav-link" href="#" onclick="document.getElementById('toAllUsers').submit(); return false;">Users</a>
-                </form>
-            </li>
         </ul>
     </div>
 </nav>
@@ -91,6 +79,25 @@
                             <td>${subs.getType()}</td>
                             <td>${subs.getDateIn()}</td>
                             <td>${subs.getDateOut()}</td>
+                            <td>
+                                <div class="btn-group dropright">
+                                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Action
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <form action="index" method="post" id="whatIsTheBook ${subs.getId()}">
+                                            <input type="hidden" name="action" value="whatIsTheBook">
+                                            <input type="hidden" name="id" value="${subs.getBookId()}">
+                                            <a class="dropdown-item" href="#" onclick="document.getElementById('whatIsTheBook ${subs.getId()}').submit(); return false;">What is the book</a>
+                                        </form>
+                                        <form action="index" method="post" id="renewSubscription ${subs.getId()}">
+                                            <input type="hidden" name="action" value="renewSubscription">
+                                            <input type="hidden" name="id" value="${subs.getId()}">
+                                            <a class="dropdown-item" href="#" onclick="document.getElementById('renewSubscription ${subs.getId()}').submit(); return false;">Renew subscription</a>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                     </c:if>
                 </c:forEach>

@@ -16,4 +16,6 @@ public interface SubscriptionService {
     List<Subscription> getCurrentSubs() throws ServiceException;
     void confirmReturnBook(int idSubs) throws ServiceException;
     List<Subscription> getCurrentUserSubs(int userId) throws ServiceException;
+    void renewSubscription(int idSubs) throws ServiceException;
+    List<Subscription> getRenewSubs() throws ServiceException;
 }

@@ -23,13 +23,13 @@
             <li>
                 <form action="index" method="post" id="goToCurrentSubs">
                     <input type="hidden" name="action" value="goToCurrentSubs">
-                    <a class="nav-link" href="#" onclick="document.getElementById('goToCurrentSubs').submit(); return false;">Current subscription<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#" onclick="document.getElementById('goToCurrentSubs').submit(); return false;">Current subscriptions<span class="sr-only">(current)</span></a>
                 </form>
             </li>
             <li>
-                <form action="index" method="post" id="toAllUsers">
-                    <input type="hidden" name="action" value="toAllUsers">
-                    <a class="nav-link" href="#" onclick="document.getElementById('toAllUsers').submit(); return false;">Users</a>
+                <form action="index" method="post" id="goToRenewSubs">
+                    <input type="hidden" name="action" value="goToRenewSubs">
+                    <a class="nav-link" href="#" onclick="document.getElementById('goToRenewSubs').submit(); return false;">Request for renew subscriptions</a>
                 </form>
             </li>
         </ul>

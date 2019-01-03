@@ -37,6 +37,8 @@ public final class CommandHelper {
         commands.put("goToAllUncSubs", new GoToAllUnconfirmedSubs());
         commands.put("goToCurrentSubs", new GoToCurrentSubs());
         commands.put("agreeReturn", new ConfirmReturnBook());
+        commands.put("renewSubscription", new RenewSubscription());
+        commands.put("goToRenewSubs", new GoToRenewSubs());
     }
 
     public static CommandHelper getInstance(){

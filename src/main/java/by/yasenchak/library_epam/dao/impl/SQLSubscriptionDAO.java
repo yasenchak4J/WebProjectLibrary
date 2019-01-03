@@ -27,6 +27,10 @@ public class SQLSubscriptionDAO implements SubscriptionDAO {
     private static final String GET_CURRENT_USER_SUBS = "SELECT s.\"dateIn\", s.\"dateOut\", s.type, s.id_subs, s.id_book, s.id_user, s.active, u.\"userName\", b.name, b.isbn FROM subscriptions s " +
             "LEFT JOIN users u ON (s.id_user = u.\"idUsers\") LEFT JOIN books b ON (s.id_book = b.id_book) WHERE s.active = true and s.done = false and s.id_user = ?";
     private static final String CONFIRM_RETURN_BOOK = "UPDATE subscriptions SET \"dateOut\" = ?, done = true WHERE id_subs = ?";
+    private static final String RENEW_SUBSCRIPTION = "UPDATE subscriptions SET \"renew\" = true WHERE id_subs = ?";
+    private static final String GET_RENEW_SUBSCRIPTION = "SELECT s.\"dateIn\", s.\"dateOut\", s.type, s.id_subs, s.id_book, s.id_user, s.active, u.\"userName\", b.name, b.isbn FROM subscriptions s " +
+            "LEFT JOIN users u ON (s.id_user = u.\"idUsers\") LEFT JOIN books b ON (s.id_book = b.id_book) WHERE s.active = true and s.done = false and s.renew = true";
+
 
     @Override
     public void addNewSubscription(Subscription subscription) throws SubscriptionDAOException {
@@ -108,6 +112,22 @@ public class SQLSubscriptionDAO implements SubscriptionDAO {
         } catch (SQLException | ConnectionPoolException e) {
             throw new SubscriptionDAOException("Problem with getCurrentUserSubs", e);
         }
+    }
+
+    @Override
+    public void renewSubscription(int idSubs) throws SubscriptionDAOException {
+        try(Connection connection = connectionPool.takeConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(RENEW_SUBSCRIPTION)){
+            preparedStatement.setInt(1, idSubs);
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new SubscriptionDAOException("Problems with renewSubscription", e);
+        }
+    }
+
+    @Override
+    public List<Subscription> getAllRenewSubscription() throws SubscriptionDAOException {
+        return getSubs(GET_RENEW_SUBSCRIPTION);
     }
 
     private List<Subscription> getSubs(String query) throws SubscriptionDAOException{
