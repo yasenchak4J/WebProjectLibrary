@@ -8,6 +8,8 @@ public enum Page {
     EDIT_PAGE("/WEB-INF/EditBook.jsp"),
     ADMIN_PAGE("/WEB-INF/AdminPage.jsp"),
     USER_PAGE("/WEB-INF/UserPage.jsp"),
+    USER_RENEW_SUBS("/WEB-INF/UserRenewSubs.jsp"),
+    AGREE_RENEW("/WEB-INF/AgreeRenew.jsp"),
     ADD_NEW_BOOK("/WEB-INF/AdminAddNewBook.jsp"),
     All_USERS("/WEB-INF/AdminAllUsers.jsp"),
     LIBRARIAN_PAGE("/WEB-INF/LibrarianPage.jsp"),

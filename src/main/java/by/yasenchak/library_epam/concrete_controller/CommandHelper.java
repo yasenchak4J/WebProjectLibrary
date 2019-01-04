@@ -39,6 +39,10 @@ public final class CommandHelper {
         commands.put("agreeReturn", new ConfirmReturnBook());
         commands.put("renewSubscription", new RenewSubscription());
         commands.put("goToRenewSubs", new GoToRenewSubs());
+        commands.put("goUserRenewSubs", new GoToUserRenewSubs());
+        commands.put("toAgreeRenew", new GoToAgreeRenew());
+        commands.put("agreeRenew", new AgreeRenew());
+        commands.put("rejectRenew", new RejectRenew());
     }
 
     public static CommandHelper getInstance(){

@@ -30,7 +30,14 @@ public class SQLSubscriptionDAO implements SubscriptionDAO {
     private static final String RENEW_SUBSCRIPTION = "UPDATE subscriptions SET \"renew\" = true WHERE id_subs = ?";
     private static final String GET_RENEW_SUBSCRIPTION = "SELECT s.\"dateIn\", s.\"dateOut\", s.type, s.id_subs, s.id_book, s.id_user, s.active, u.\"userName\", b.name, b.isbn FROM subscriptions s " +
             "LEFT JOIN users u ON (s.id_user = u.\"idUsers\") LEFT JOIN books b ON (s.id_book = b.id_book) WHERE s.active = true and s.done = false and s.renew = true";
-
+    private static final String CONFIRM_RENEW_SUBS = "UPDATE subscriptions SET \"renew\" = false, \"renewDone\" = true, \"dateOut\" = ? WHERE id_subs = ?";
+    private static final String REJECT_RENEW_SUBS = "UPDATE subscriptions SET \"renew\" = false, \"renewDone\" = false WHERE id_subs = ?";
+    private static final String GET_USER_RENEW_SUBS = "SELECT s.\"dateIn\", s.\"dateOut\", s.type, s.id_subs, s.id_book, s.id_user, s.active, u.\"userName\", b.name, b.isbn FROM subscriptions s " +
+            "LEFT JOIN users u ON (s.id_user = u.\"idUsers\") LEFT JOIN books b ON (s.id_book = b.id_book) WHERE s.active = true and s.done = false and s.renew = true and s.id_user = ?";
+    private static final String GET_USER_CONFIRMED_SUBS = "SELECT s.\"dateIn\", s.\"dateOut\", s.type, s.id_subs, s.id_book, s.id_user, s.active, u.\"userName\", b.name, b.isbn FROM subscriptions s " +
+            "LEFT JOIN users u ON (s.id_user = u.\"idUsers\") LEFT JOIN books b ON (s.id_book = b.id_book) WHERE s.active = true and s.done = false and s.renew = false and s.\"renewDone\" = true and s.id_user = ?";
+    private static final String GET_USER_REJECTED_SUBS = "SELECT s.\"dateIn\", s.\"dateOut\", s.type, s.id_subs, s.id_book, s.id_user, s.active, u.\"userName\", b.name, b.isbn FROM subscriptions s " +
+            "LEFT JOIN users u ON (s.id_user = u.\"idUsers\") LEFT JOIN books b ON (s.id_book = b.id_book) WHERE s.active = true and s.done = false and s.renew = false and s.\"renewDone\" = false and s.id_user = ?";
 
     @Override
     public void addNewSubscription(Subscription subscription) throws SubscriptionDAOException {
@@ -128,6 +135,77 @@ public class SQLSubscriptionDAO implements SubscriptionDAO {
     @Override
     public List<Subscription> getAllRenewSubscription() throws SubscriptionDAOException {
         return getSubs(GET_RENEW_SUBSCRIPTION);
+    }
+
+    @Override
+    public void confirmRenewSubs(Subscription subscription) throws SubscriptionDAOException {
+        try(Connection connection = connectionPool.takeConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(CONFIRM_RENEW_SUBS)){
+            preparedStatement.setDate(1, Date.valueOf(subscription.getDateOut()));
+            preparedStatement.setInt(2, subscription.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new SubscriptionDAOException("Problems with confirmRenewSubs", e);
+        }
+    }
+
+    @Override
+    public void rejectRenewSubs(int idSubs) throws SubscriptionDAOException {
+        try(Connection connection = connectionPool.takeConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(REJECT_RENEW_SUBS)){
+            preparedStatement.setInt(1, idSubs);
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new SubscriptionDAOException("Problems with rejectRenewSubs", e);
+        }
+    }
+
+    @Override
+    public List<Subscription> getUserRenewSubs(int idUser) throws SubscriptionDAOException {
+        try (Connection conn = connectionPool.takeConnection();
+             PreparedStatement statement = conn.prepareStatement(GET_USER_RENEW_SUBS)) {
+            List<Subscription> subscriptions = new ArrayList<>();
+            statement.setInt(1, idUser);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                subscriptions.add(createSubs(resultSet));
+            }
+            return subscriptions;
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new SubscriptionDAOException("Problem with getUserRenewSubs", e);
+        }
+    }
+
+    @Override
+    public List<Subscription> getUserConfirmedSubs(int idUser) throws SubscriptionDAOException {
+        try (Connection conn = connectionPool.takeConnection();
+             PreparedStatement statement = conn.prepareStatement(GET_USER_CONFIRMED_SUBS)) {
+            List<Subscription> subscriptions = new ArrayList<>();
+            statement.setInt(1, idUser);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                subscriptions.add(createSubs(resultSet));
+            }
+            return subscriptions;
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new SubscriptionDAOException("Problem with getUserConfirmedSubs", e);
+        }
+    }
+
+    @Override
+    public List<Subscription> getUserRejectedSubs(int idUser) throws SubscriptionDAOException {
+        try (Connection conn = connectionPool.takeConnection();
+             PreparedStatement statement = conn.prepareStatement(GET_USER_REJECTED_SUBS)) {
+            List<Subscription> subscriptions = new ArrayList<>();
+            statement.setInt(1, idUser);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                subscriptions.add(createSubs(resultSet));
+            }
+            return subscriptions;
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new SubscriptionDAOException("Problem with getUserRejectedSubs", e);
+        }
     }
 
     private List<Subscription> getSubs(String query) throws SubscriptionDAOException{
