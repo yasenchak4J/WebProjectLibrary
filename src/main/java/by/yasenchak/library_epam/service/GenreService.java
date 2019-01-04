@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface GenreService {
     List<Genre> getAllGenre() throws ServiceException;
+    Genre getGenreById(int id) throws ServiceException;
+    void changeGenre(Genre genre) throws ServiceException;
+    void addNewGenre(Genre genre) throws ServiceException;
 }

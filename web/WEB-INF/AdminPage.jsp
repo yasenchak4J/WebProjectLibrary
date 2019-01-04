@@ -32,6 +32,18 @@
                      <a class="nav-link" href="#" onclick="document.getElementById('toAllUsers').submit(); return false;">Users</a>
                  </form>
              </li>
+             <li>
+                 <form action="index" method="post" id="toAllAuthors">
+                     <input type="hidden" name="action" value="toAllAuthors">
+                     <a class="nav-link" href="#" onclick="document.getElementById('toAllAuthors').submit(); return false;">Authors</a>
+                 </form>
+             </li>
+             <li>
+                 <form action="index" method="post" id="toAllGenres">
+                     <input type="hidden" name="action" value="toAllGenres">
+                     <a class="nav-link" href="#" onclick="document.getElementById('toAllGenres').submit(); return false;">Genres</a>
+                 </form>
+             </li>
          </ul>
          <form class="form-inline my-2 my-lg-0" action="index">
              <input class="form-control mr-sm-2" type="search" placeholder="Search" name="textSearch" aria-label="Search">

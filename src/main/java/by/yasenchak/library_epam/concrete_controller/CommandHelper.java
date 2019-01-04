@@ -43,6 +43,17 @@ public final class CommandHelper {
         commands.put("toAgreeRenew", new GoToAgreeRenew());
         commands.put("agreeRenew", new AgreeRenew());
         commands.put("rejectRenew", new RejectRenew());
+        commands.put("toAllAuthors", new GoToAllAuthors());
+        commands.put("deleteAuthor", new DeleteAuthor());
+        commands.put("toChangeAuthor", new GoToChangeAuthor());
+        commands.put("changeAuthor", new ChangeAuthor());
+        commands.put("addNewAuthor", new AddNewAuthor());
+        commands.put("toAddNewAuthor", new GoToAddNewAuthor());
+        commands.put("toAllGenres", new GoToAllGenres());
+        commands.put("toChangeGenre", new GoToChangeGenre());
+        commands.put("changeGenre", new ChangeGenre());
+        commands.put("toAddNewGenre", new GoToAddNewGenre());
+        commands.put("addNewGenre", new AddNewGenre());
     }
 
     public static CommandHelper getInstance(){

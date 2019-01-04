@@ -6,6 +6,43 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <form action="index" method="post" id="allBooks">
+                <input type="hidden" name="action" value="getAllBookAdmin">
+                <a class="nav-link" href="#" onclick="document.getElementById('allBooks').submit(); return false;">All books<span class="sr-only">(current)</span></a>
+            </form>
+        </li>
+        <li>
+            <form action="index" method="post" id="toAddNewBook">
+                <input type="hidden" name="action" value="toAddNewBook">
+                <a class="nav-link" href="#" onclick="document.getElementById('toAddNewBook').submit(); return false;">Add new book</a>
+            </form>
+        </li>
+        <li>
+            <form action="index" method="post" id="toAllUsers">
+                <input type="hidden" name="action" value="toAllUsers">
+                <a class="nav-link" href="#" onclick="document.getElementById('toAllUsers').submit(); return false;">Users</a>
+            </form>
+        </li>
+        <li>
+            <form action="index" method="post" id="toAllAuthors">
+                <input type="hidden" name="action" value="toAllAuthors">
+                <a class="nav-link" href="#" onclick="document.getElementById('toAllAuthors').submit(); return false;">Authors</a>
+            </form>
+        </li>
+        <li>
+            <form action="index" method="post" id="toAllGenres">
+                <input type="hidden" name="action" value="toAllGenres">
+                <a class="nav-link" href="#" onclick="document.getElementById('toAllGenres').submit(); return false;">Genres</a>
+            </form>
+        </li>
+    </ul>
+</div>
+</nav>
+
     <div class="container-fluid h-100">
         <div class="row  align-items-center justify-content-center h-100">
         <div class="row align-items-center justify-content-center">

@@ -33,18 +33,64 @@
                     <a class="nav-link" href="#" onclick="document.getElementById('toAllUsers').submit(); return false;">Users</a>
                 </form>
             </li>
+            <li>
+                <form action="index" method="post" id="toAllAuthors">
+                    <input type="hidden" name="action" value="toAllAuthors">
+                    <a class="nav-link" href="#" onclick="document.getElementById('toAllAuthors').submit(); return false;">Authors</a>
+                </form>
+            </li>
+            <li>
+                <form action="index" method="post" id="toAllGenres">
+                    <input type="hidden" name="action" value="toAllGenres">
+                    <a class="nav-link" href="#" onclick="document.getElementById('toAllGenres').submit(); return false;">Genres</a>
+                </form>
+            </li>
         </ul>
     </div>
 </nav>
 
-<form action="index" method = "post">
-    <input type="hidden" name="action" value="addNewBook">
-    <input type="text" name="name" placeholder="Название книги">
-    <input type="text" name="pageCount" placeholder="Количество страниц">
-    <input type="text" name="isbn" placeholder="isbn">
-    <input type="text" name="publisher" placeholder="Издательство">
-    <input type="submit" name="submit" value="Добавить">
-</form>
+<div class="container-fluid h-100">
+    <div class="row align-items-center justify-content-center h-100">
+        <div class="col-md-auto">
+            <form action="index" method="post" enctype="multipart/form-data">
+                <div class="custom-file">
+                    <input type="file" name="file" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose book image</label>
+                </div>
+                <input type="hidden" name="action" value="addNewBook">
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Book name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="name" id="inputEmail3" placeholder="Book name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Pages count</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputPassword3" name="pageCount" placeholder="Pages count">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="firstName" class="col-sm-2 col-form-label">ISBN</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="isbn" id="firstName" placeholder="ISBN">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="lastName" class="col-sm-2 col-form-label">Publisher</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Publisher">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">Add new book</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

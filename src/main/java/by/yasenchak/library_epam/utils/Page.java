@@ -11,6 +11,8 @@ public enum Page {
     USER_RENEW_SUBS("/WEB-INF/UserRenewSubs.jsp"),
     AGREE_RENEW("/WEB-INF/AgreeRenew.jsp"),
     ADD_NEW_BOOK("/WEB-INF/AdminAddNewBook.jsp"),
+    ALL_AUTHORS("/WEB-INF/AdminAllAuthors.jsp"),
+    ALL_GENRES("/WEB-INF/AdminAllGenres.jsp"),
     All_USERS("/WEB-INF/AdminAllUsers.jsp"),
     LIBRARIAN_PAGE("/WEB-INF/LibrarianPage.jsp"),
     LIBRARIAN_BOOK("/WEB-INF/LibrarianBook.jsp"),

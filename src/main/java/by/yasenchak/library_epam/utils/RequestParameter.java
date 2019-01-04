@@ -2,7 +2,13 @@ package by.yasenchak.library_epam.utils;
 
 public enum RequestParameter {
     ACTION("action"),
+    AUTHORS("authors"),
+    NEW_AUTHOR("addNewAuthor"),
+    CHANGE_AUTHOR("changeAuthor"),
+    CHANGE_GENRE("changeGenre"),
+    NEW_GENRE("addNewGenre"),
     NAME("name"),
+    SURNAME("surname"),
     PUBLISHER("publisher"),
     PAGE_COUNT("pageCount"),
     ISBN("isbn"),
